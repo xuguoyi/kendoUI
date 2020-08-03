@@ -1,0 +1,42 @@
+@import "./examples-offline.css";
+@import "./kendo.common.min.css";
+@import "./kendo.rtl.min.css";
+@import "./kendo.default.min.css";
+@import "./kendo.default.mobile.min.css";
+
+.hd {
+  display: flex;
+  height: 54px;
+  width: 100%;
+  background: #aaa;
+  padding: 0 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+.logo {
+  background: url(./images/logo.png) 0 center no-repeat;
+  width: 130px;
+  padding-left: 220px;
+  line-height: 20px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+.logo>h4:first-child {
+  margin-top: 8px;
+}
+.hd .menu .k-menu .k-item>.k-link, 
+.hd .menu .k-menu .k-menu-scroll-wrapper .k-item>.k-link, 
+.hd .menu .k-menu .k-popups-wrapper .k-item>.k-link {
+  padding: 18px;
+}
+.menu {
+  width: calc(100% - 575px)
+}
+.links {
+  flex-shrink: 0;
+}
+.hd .links .k-toolbar>* {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

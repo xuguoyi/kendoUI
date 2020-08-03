@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>menu</title>
+  <meta charset="utf-8">
+  <link href="../../styles/all.css" rel="stylesheet">
+</head>
+
+<body>
+  <div>
+    <header class="hd">
+      <div class="logo">
+        <h4>原材料控制系统</h4>
+        <h4>(MCS)</h4>
+      </div>
+      <div class="menu">
+        <ul id="horizontalMenu">
+          <li>
+            Mens
+            <ul>
+              <li>Jackets and Coats</li>
+              <li>Jeans</li>
+              <li>Knitwear</li>
+              <li>Shirts</li>
+              <li>Belts</li>
+              <li>Socks</li>
+              <li>Fan Zone</li>
+            </ul>
+          </li>
+          <li>
+            Ladies
+            <ul>
+              <li>Jackets and Coats</li>
+              <li>Jeans</li>
+              <li>Knitwear</li>
+              <li>Shirts</li>
+              <li>Belts</li>
+              <li>Socks</li>
+              <li>Fan Zone</li>
+            </ul>
+          </li>
+          <li>
+            Kids
+            <ul>
+              <li>Jackets and Coats</li>
+              <li>Jeans</li>
+              <li>Knitwear</li>
+              <li>Shirts</li>
+              <li>Belts</li>
+              <li>Socks</li>
+              <li>Fan Zone</li>
+            </ul>
+          </li>
+          <li>Sports</li>
+          <li>Brands</li>
+          <li url="./accessories.html">Accessories</li>
+          <li url="./promotions.html">Promotions</li>
+        </ul>
+      </div>
+      <div class="links">
+        <div id="toolbar"></div>
+      </div>
+    </header>
+    <div>
+      <div id="tabstrip">
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
+  <script>
+    function requireReady() {
+      $("#horizontalMenu").kendoMenu({
+        scrollable: true
+      });
+
+      $("#toolbar").kendoToolBar({
+        items: [
+          { template: '<a class="k-button" href="#"><span class="k-icon k-i-user"></span> <span id="badge-overlay">2</span></a>' },
+          { template: '<a class="k-button" href="#"><span class="k-icon k-i-email"></span> <span id="badge-inbox">5</span></a>' },
+          { template: '<a class="k-button" href="#">退出</a>' }
+        ]
+      });
+
+      $('#badge-overlay').kendoBadge({
+        color: 'primary',
+        shape: 'rectangle'
+      });
+
+      $('#badge-inbox').kendoBadge({
+        color: 'info',
+        shape: 'rounded'
+      });
+
+
+      var tabstrip = $("#tabstrip").kendoTabStrip({
+        animation: { open: { effects: "fadeIn" } },
+        dataTextField: "text",
+        dataContentUrlField: "ContentUrl",
+        dataSource: [
+          {
+            text: "首页",
+            ContentUrl: "../../examples/content/web/tabstrip/ajax/ajaxContent1.html"
+          }
+        ]
+      }).data('kendoTabStrip')
+
+      var configureCloseTab = function () {
+        var tabsElements = $('#tabstrip li[role="tab"]:gt(0)');
+        tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
+      };
+
+      tabstrip.tabGroup.on("click", "[data-type='remove']", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var item = $(e.target).closest(".k-item");
+        tabstrip.remove(item.index());
+        if (tabstrip.items().length > 0 && item.hasClass('k-state-active')) {
+          tabstrip.select(0);
+        }
+      });
+      configureCloseTab()
+
+      $("#horizontalMenu li").on("click", function () {
+        let text = $(this).text()
+        let url = $(this).attr('url')
+        if (url && !tabstrip._contentUrls.includes(url)) {
+          tabstrip.append(
+            [{
+              text: text,
+              contentUrl: url
+            }]
+          )
+          var tabsElements = $('#tabstrip li[role="tab"]:last-child');
+          tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
+          var tabToActivate = $("#tabstrip li:last")
+          $("#tabstrip").kendoTabStrip().data("kendoTabStrip").activateTab(tabToActivate)
+        }
+      })
+    };
+  </script>
+
+  <style>
+    .k-menu-scroll-wrapper.horizontal li.k-item.k-last {
+      border-right-width: 0;
+    }
+  </style>
+
+
+</body>
+
+</html>
