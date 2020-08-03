@@ -101,10 +101,13 @@
         dataSource: [
           {
             text: "首页",
-            ContentUrl: "../../examples/content/web/tabstrip/ajax/ajaxContent1.html"
+            ContentUrl: "./app.html"
           }
         ]
       }).data('kendoTabStrip')
+
+      var tabToActivate = $("#tabstrip li:first")
+      $("#tabstrip").kendoTabStrip().data("kendoTabStrip").activateTab(tabToActivate)
 
       var configureCloseTab = function () {
         var tabsElements = $('#tabstrip li[role="tab"]:gt(0)');
