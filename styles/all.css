@@ -40,3 +40,31 @@
   margin-top: 8px;
   margin-bottom: 8px;
 }
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.demo-section:not(.wide), #example .box:not(.wide) {
+  max-width: none;
+}
+.k-form-horizontal .k-form-field>.k-form-label, .k-form-horizontal .k-form-field>.k-label{
+  width: 165px;
+  justify-content: end;
+}
+.k-form-legend {
+  margin: 0;
+  border: none;
+}
+.k-form-field {
+  margin: 0 16px;
+}
+.k-state-selected {
+  background-color: #eae8e8;
+  border-color: #eae8e8;
+}
+.k-panelbar .k-item .k-link.k-state-selected, .k-panelbar>li.k-state-default>.k-link.k-state-selected, .k-panelbar>li>.k-state-selected {
+  color: #2e2e2e;
+}
+.k-panelbar>.k-item>.k-link {
+  font-size: 16px;
+}

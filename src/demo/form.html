@@ -1,0 +1,187 @@
+<div class="demo-section k-content">
+  <h1 class="form-title">表单</h1>
+  <div id="validation-success"></div>
+  <ul id="panelbar">
+    <li id="item1">基本信息
+      <div>
+        <form id="exampleform"></form>
+      </div>
+    </li>
+    <li id="item2">动态行
+      <div>
+        <div id="grid"></div>
+      </div>
+    </li>
+    <li id="item3">明细信息
+      <div>
+        
+      </div>
+    </li>
+  </ul>
+</div>
+
+<script type="text/javascript">
+  var validationSuccess = $("#validation-success");
+  // panelbar
+  $("#panelbar").kendoPanelBar();
+  var panelBar = $("#panelbar").data("kendoPanelBar")
+  panelBar.expand($('[id^="item"]'))
+
+  // form
+  $("#exampleform").kendoForm({
+    orientation: "horizontal",
+    formData: {
+      FirstName: "John",
+      LastName: "Doe",
+      Email: "john.doe@email.com",
+      Country: "1",
+      City: "Strasbourg",
+      AddressLine: new Date(),
+      Effective: false,
+      Remark: 'erereeeeeee'
+    },
+    layout: "grid",
+    grid: {
+      cols: 2,
+      gutter: 20
+    },
+    items: [
+      {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1, gutter: 10 },
+        items: [
+          {
+            field: "FirstName",
+            label: "First Name:",
+            editor: 'AutoComplete',
+            editorOptions: {
+              enable: false
+            }
+          },
+          {
+            field: "LastName",
+            label: "Last Name:",
+            editor: "NumericTextBox",
+            validation: { required: true }
+          },
+          {
+            field: "Email",
+            label: "Email",
+            validation: {
+              required: true,
+              email: true
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1, gutter: 10 },
+        items: [
+          {
+            field: "Country",
+            editor: "DropDownList",
+            label: "Country",
+            validation: { required: true },
+            editorOptions: {
+              optionLabel: "Select...",
+              dataSource: [
+                { Name: "France", Id: 1 },
+                { Name: "Germany", Id: 2 },
+                { Name: "Italy", Id: 3 },
+                { Name: "Spain", Id: 4 }
+              ],
+              dataTextField: "Name",
+              dataValueField: "Id"
+            }
+          },
+          {
+            field: "AddressLine",
+            label: "Address Line",
+            optional: true,
+            validation: { required: true }
+          },
+          {
+            field: "Effective",
+            label: "Effective",
+            editor: "Switch"
+          },
+        ]
+      }, {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1 },
+        colSpan: 2,
+        items: [
+          {
+            field: "Remark",
+            label: "Remark:",
+          }
+        ]
+      }
+    ],
+    validateField: function (e) {
+      validationSuccess.html("");
+    },
+    submit: function (e) {
+      e.preventDefault();
+      validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+    },
+    clear: function (ev) {
+      validationSuccess.html("");
+    }
+  });
+
+  // grid
+  var dataSource = new kendo.data.DataSource({
+    pageSize: 20,
+    data: [
+      { ProductName: 'wewewe', Category: { CategoryID: 1, CategoryName: "Beverages" }, UnitPrice: 2 }
+    ],
+    autoSync: true,
+    schema: {
+      model: {
+        id: "ProductID",
+        fields: {
+          ProductID: { editable: false, nullable: true },
+          ProductName: { validation: { required: true } },
+          Category: { defaultValue: { CategoryID: 1, CategoryName: "Beverages" } },
+          UnitPrice: { type: "number", validation: { required: true, min: 1 } }
+        }
+      }
+    }
+  });
+
+  $("#grid").kendoGrid({
+    dataSource: dataSource,
+    // pageable: true,
+    // height: 350,
+    toolbar: ["create"],
+    columns: [
+      { field: "ProductName", title: "Product Name" },
+      { field: "Category", title: "Category", width: "180px", editor: categoryDropDownEditor, template: "#=Category.CategoryName#" },
+      { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
+      { command: "destroy", title: " ", width: "150px" }],
+    editable: {
+      createAt: "bottom"
+    },
+  });
+
+  function categoryDropDownEditor(container, options) {
+    $('<input required name="' + options.field + '"/>')
+      .appendTo(container)
+      .kendoDropDownList({
+        autoBind: false,
+        dataTextField: "CategoryName",
+        dataValueField: "CategoryID",
+        dataSource: [
+          { CategoryName: "Beverages", CategoryID: "1" },
+          { CategoryName: "Polyester", CategoryID: "2" },
+          { CategoryName: "Cotton/Polyester", CategoryID: "3" },
+          { CategoryName: "Rib Knit", CategoryID: "4" }
+        ]
+      });
+  }
+</script>

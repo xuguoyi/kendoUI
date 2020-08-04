@@ -17,10 +17,10 @@
       <div class="menu">
         <ul id="horizontalMenu">
           <li>
-            Mens
+            Demo
             <ul>
-              <li>Jackets and Coats</li>
-              <li>Jeans</li>
+              <li url="./form.html">表单</li>
+              <li url="./frozen.html">Frozen and Editable</li>
               <li>Knitwear</li>
               <li>Shirts</li>
               <li>Belts</li>
@@ -137,8 +137,7 @@
           )
           var tabsElements = $('#tabstrip li[role="tab"]:last-child');
           tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
-          var tabToActivate = $("#tabstrip li:last")
-          $("#tabstrip").kendoTabStrip().data("kendoTabStrip").activateTab(tabToActivate)
+          $("#tabstrip").kendoTabStrip().data("kendoTabStrip").activateTab(tabsElements)
         }
       })
     };
