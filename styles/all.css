@@ -3,6 +3,7 @@
 @import "./kendo.rtl.min.css";
 @import "./kendo.default.min.css";
 @import "./kendo.default.mobile.min.css";
+@import "./font-awesome-4.7.0/css/font-awesome.min.css";
 
 .hd {
   display: flex;
@@ -67,4 +68,25 @@
 }
 .k-panelbar>.k-item>.k-link {
   font-size: 16px;
+}
+
+.form-content {
+  display: flex;
+}
+.oper-btn {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.oper-btn button {
+  margin-bottom: 10px;
+}
+/* .oper-btn button {
+  margin-bottom: 10px;
+} */
+.oper-btn .fa {
+  font-size: 20px;
+}
+.form-content .k-form-buttons.k-buttons-end {
+  display: none;
 }
