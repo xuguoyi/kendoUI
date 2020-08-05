@@ -1,4 +1,4 @@
-<div class="demo-section k-content">
+<div class="all-form">
   <h1 class="form-title">表单</h1>
   <div id="validation-success"></div>
   <div class="form-content">
@@ -15,19 +15,18 @@
       </li>
       <li id="item3">明细信息
         <div>
-          
+          <div id="info-grid"></div>
         </div>
       </li>
     </ul>
+    <div id="dialog"></div>
     <div class="oper-btn">
-      <button><i class="fa fa-save"></i></button>
-      <button><i class="fa fa-close"></i></button>
-      <button><i class="fa fa-check"></i></button>
+      <button title="保存"><i class="fa fa-save"></i></button>
+      <button title="关闭"><i class="fa fa-close"></i></button>
+      <button title="提交"><i class="fa fa-check"></i></button>
     </div>
   </div>
-  
 </div>
-
 <script type="text/javascript">
   var validationSuccess = $("#validation-success");
   // panelbar
@@ -51,7 +50,7 @@
     layout: "grid",
     grid: {
       cols: 2,
-      gutter: 20
+      // gutter: 20
     },
     items: [
       {
@@ -134,7 +133,6 @@
       validationSuccess.html("");
     },
     submit: function (e) {
-      console.log(e,'e')
       e.preventDefault();
       validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
     },
@@ -194,7 +192,180 @@
       });
   }
 
-  $('.fa-save').on('click', function(){
-    $("#exampleform").find('.k-form-submit').trigger('click')
+
+  // 明细
+  var dataSource = new kendo.data.DataSource({
+    type: "odata",
+    transport: {
+      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
+    },
+    pageSize: 5,
+    serverPaging: true,
+    serverSorting: true
+  });
+  var ids = {};
+  var info_data = {};
+  var myWindow = $("#dialog")
+  $("#info-grid").kendoGrid({
+    dataSource: dataSource,
+    // pageable:false,
+    pageable: {
+      // pageSize:5,
+      refresh: true
+    },
+    columns: [
+      {
+        width: 150, command: [
+          {
+            name: '选择货位',
+            click: function (e) {
+              e.preventDefault();
+              var tr = $(e.target).closest("tr");
+              var data = this.dataItem(tr);
+              parentId = data.EmployeeID;
+              if (!info_data[parentId]) {
+                info_data[parentId] = []
+              }
+
+              if (!ids[parentId]) {
+                ids[parentId] = []
+              }
+              //选择货位弹出框
+              myWindow.kendoWindow({
+                width: "615px",
+                title: "Rams's Ten Principles of Good Design",
+                content: "./window.html"
+              });
+              myWindow.data("kendoWindow").center().open();
+            }
+          }
+        ]
+      },
+      {
+        field: "FirstName",
+        title: "First Name",
+        width: "120px"
+      },
+      {
+        field: "LastName",
+        title: "Last Name",
+        width: "120px"
+      },
+      {
+        field: "Country",
+        width: "120px"
+      },
+      {
+        field: "City",
+        width: "120px"
+      },
+      {
+        field: "Title"
+      }
+    ],
+    detailTemplate: '<div id="split-grid"></div>',
+    detailExpand: function (e) {
+      var id = this.dataItem(e.masterRow).EmployeeID
+      e.detailRow.find("#split-grid").data("kendoGrid").dataSource.read({
+        data: info_data[id]
+      })
+      // 点击展开时，添加自定义属性
+      e.masterRow.attr("data-id", id);
+    },
+    detailInit: function (e) {
+      var id = this.dataItem(e.detailRow.prev("tr")).EmployeeID;
+      info_data[id] = [{ OrderID: 10258, ShipAddress: "Kirchgasse 6" }];
+      ids[id] = [10258];
+      e.detailRow.find("#split-grid").kendoGrid({
+        dataSource: {
+          // data: info_data[id],
+          // pageSize:10,
+          transport: {
+            //动态改变数据的时候
+            read: function (operation) {
+              var data = operation.data.data || [];
+              operation.success(data);
+            }
+          },
+          // autoSync: true,
+          schema: {
+            model: {
+              fields: {
+                ShipCountry: { editable: false },
+                OrderID: { editable: false },
+              }
+            }
+          }
+        },
+        // toolbar:[
+        //     { name:'save' }
+        // ],
+        editable: true,
+        columns: [
+          { width: 150, command: 'destroy' },
+          {
+            field: "ShipCountry", title: "入库货位", width: 200,
+            attributes: { class: 'cargopositionNo' },
+            editable: function () { return true }
+          },
+          {
+            field: "ShipAddress", title: "入库工装数量", width: 200,
+            attributes: { class: 'toolNumber' },
+            editable: function () { return false }
+          },
+          { field: 'OrderID', title: '&nbsp;', editable: function () { return false } }
+        ],
+
+        pageable: false
+      })
+    },
+    dataBinding: function (e) {
+      if (e.action === "itemchange") {
+        e.preventDefault();
+      }
+    },
+    dataBound: function () {
+      // 获取当前点击行的index值
+      var commands = $("#info-grid .k-master-row .k-command-cell a");
+      for (var i = 0; i < commands.length; i++) {
+        var a = commands[i];
+        //给每个className为child的元素添加index属性;
+        a.index = i;
+        a.onclick = function () {
+          // alert(this.index)
+          index = this.index;
+        }
+      }
+    }
   })
+
+  // operBtn
+  var tooltip = $(".oper-btn").kendoTooltip({
+    filter: "button",
+    position: "right",
+    animation: {
+      open: {
+        effects: "zoom",
+        duration: 150
+      }
+    }
+  }).data("kendoTooltip");
+
+  $('.fa-save').on('click', function () {
+    $("#exampleform").find('.k-form-submit').trigger('click')
+    console.log($('#grid').data("kendoGrid")._data)
+  })
+
+  $('.fa-close').on('click', function () {
+    let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
+    $("#tabstrip").data("kendoTabStrip").remove(idx - 1);
+    $("#tabstrip").data("kendoTabStrip").select(0);
+  })
+
 </script>
+<!-- <script id="template" type="text/x-kendo-template">
+  <div class="template-wrapper">
+      <img src="../content/web/foods/200/#=target.data('id')#.jpg" alt="#=target.data('title')#" />
+      <p>#=target.data('title')#</p>
+  </div>
+</script> -->

@@ -5,6 +5,13 @@
 @import "./kendo.default.mobile.min.css";
 @import "./font-awesome-4.7.0/css/font-awesome.min.css";
 
+html, body, #tabstrip  {
+  height: 100%;
+  overflow: hidden;
+}
+.k-tabstrip-wrapper {
+  height: calc(100% - 56px);
+}
 .hd {
   display: flex;
   height: 54px;
@@ -41,6 +48,13 @@
   margin-top: 8px;
   margin-bottom: 8px;
 }
+#panelbar {
+  width: 100%;
+}
+.all-form {
+  width: 80%;
+  margin: 0 auto;
+}
 .form-title {
   text-align: center;
   margin-bottom: 20px;
@@ -58,6 +72,15 @@
 }
 .k-form-field {
   margin: 0 16px;
+}
+.k-form-fieldset {
+  margin: 8px 0 0;
+}
+.k-content {
+  height: calc(100% - 50px);
+}
+.k-panelbar .k-content {
+  padding: 20px;
 }
 .k-state-selected {
   background-color: #eae8e8;
@@ -80,6 +103,7 @@
 }
 .oper-btn button {
   margin-bottom: 10px;
+  cursor: pointer;
 }
 /* .oper-btn button {
   margin-bottom: 10px;
@@ -89,4 +113,7 @@
 }
 .form-content .k-form-buttons.k-buttons-end {
   display: none;
+}
+.selected {
+  height: calc(100% - 60px)!important;
 }

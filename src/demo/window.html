@@ -1,0 +1,83 @@
+<div class="pos">
+  <button class="determine_window">确定</button>
+  <button class="cancel_window">取消</button>
+</div>
+
+<script type="text/javascript">
+  $(".pos").kendoGrid({
+    dataSource: {
+      type: "odata",
+      transport: {
+        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+      },
+      serverPaging: true,
+      serverSorting: true,
+      serverFiltering: true,
+      pageSize: 7,
+      // filter: { field: "EmployeeID", operator: "eq", value: data.EmployeeID },
+      schema: {
+        model: {
+          id: 'OrderID'
+        }
+      }
+
+    },
+    filterable: {
+      mode: 'row'
+    },
+    columns: [
+      // { selectable:true, width:50 },
+      { field: "OrderID", title: "ID", width: "70px" },
+      { field: "ShipCountry", title: "Ship Country", width: "110px" },
+      { field: "ShipAddress", title: "Ship Address" },
+      { field: "ShipName", title: "Ship Name", width: "300px" }
+    ],
+    pageable: {
+      pageSize: 10,
+      refresh: true
+    },
+    // pageable:false,
+    height: 320,
+    persistSelection: true,
+    selectable: true,
+    change: function (e) {
+      var selectedRows = this.select();
+      var selectedDataItems = [];
+      for (var i = 0; i < selectedRows.length; i++) {
+        var dataItem = this.dataItem(selectedRows[i]);
+        selectedDataItems.push(dataItem);
+      }
+      $(".pos").data('sel_data', selectedDataItems);
+    }
+  })
+
+  $('.determine_window').on('click', function() {
+    $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
+    var sel_data = $(".pos").data("sel_data");
+    $.each(sel_data, function (i, item) {
+      if ((ids[parentId]).indexOf(item.OrderID) == -1) {
+        ids[parentId].push(item.OrderID);
+        info_data[parentId].push(item);
+      }
+      $(".k-detail-row .k-i-reload").click();
+    });
+    clearInfo()
+    $("#dialog").data("kendoWindow").close();
+  })
+
+  $('.cancel_window').on('click', function() {
+    clearInfo()
+    $("#dialog").data("kendoWindow").close();
+  })
+
+  function clearInfo() {
+    $(".pos").data("kendoGrid").clearSelection();
+    // 关闭已打开的子表格 
+    var openDetails = $("#info-grid .k-master-row td a.k-i-collapse");
+    openDetails.each(function () {
+      $(this).click();
+    })
+    // 打开对应的子表格
+    $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
+  }
+</script>

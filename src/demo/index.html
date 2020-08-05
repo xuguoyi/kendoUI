@@ -8,65 +8,60 @@
 </head>
 
 <body>
-  <div>
-    <header class="hd">
-      <div class="logo">
-        <h4>原材料控制系统</h4>
-        <h4>(MCS)</h4>
-      </div>
-      <div class="menu">
-        <ul id="horizontalMenu">
-          <li>
-            Demo
-            <ul>
-              <li url="./form.html">表单</li>
-              <li url="./frozen.html">Frozen and Editable</li>
-              <li>Knitwear</li>
-              <li>Shirts</li>
-              <li>Belts</li>
-              <li>Socks</li>
-              <li>Fan Zone</li>
-            </ul>
-          </li>
-          <li>
-            Ladies
-            <ul>
-              <li>Jackets and Coats</li>
-              <li>Jeans</li>
-              <li>Knitwear</li>
-              <li>Shirts</li>
-              <li>Belts</li>
-              <li>Socks</li>
-              <li>Fan Zone</li>
-            </ul>
-          </li>
-          <li>
-            Kids
-            <ul>
-              <li>Jackets and Coats</li>
-              <li>Jeans</li>
-              <li>Knitwear</li>
-              <li>Shirts</li>
-              <li>Belts</li>
-              <li>Socks</li>
-              <li>Fan Zone</li>
-            </ul>
-          </li>
-          <li>Sports</li>
-          <li>Brands</li>
-          <li url="./accessories.html">Accessories</li>
-          <li url="./promotions.html">Promotions</li>
-        </ul>
-      </div>
-      <div class="links">
-        <div id="toolbar"></div>
-      </div>
-    </header>
-    <div>
-      <div id="tabstrip">
-      </div>
+  <header class="hd">
+    <div class="logo">
+      <h4>原材料控制系统</h4>
+      <h4>(MCS)</h4>
     </div>
-  </div>
+    <div class="menu">
+      <ul id="horizontalMenu">
+        <li>
+          Demo
+          <ul>
+            <li url="./form.html">表单</li>
+            <li url="./frozen.html">Frozen and Editable</li>
+            <li>Knitwear</li>
+            <li>Shirts</li>
+            <li>Belts</li>
+            <li>Socks</li>
+            <li>Fan Zone</li>
+          </ul>
+        </li>
+        <li>
+          Ladies
+          <ul>
+            <li>Jackets and Coats</li>
+            <li>Jeans</li>
+            <li>Knitwear</li>
+            <li>Shirts</li>
+            <li>Belts</li>
+            <li>Socks</li>
+            <li>Fan Zone</li>
+          </ul>
+        </li>
+        <li>
+          Kids
+          <ul>
+            <li>Jackets and Coats</li>
+            <li>Jeans</li>
+            <li>Knitwear</li>
+            <li>Shirts</li>
+            <li>Belts</li>
+            <li>Socks</li>
+            <li>Fan Zone</li>
+          </ul>
+        </li>
+        <li>Sports</li>
+        <li>Brands</li>
+        <li url="./accessories.html">Accessories</li>
+        <li url="./promotions.html">Promotions</li>
+      </ul>
+    </div>
+    <div class="links">
+      <div id="toolbar"></div>
+    </div>
+  </header>
+  <div id="tabstrip"></div>
 
   <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
   <script>
@@ -95,7 +90,7 @@
 
 
       var tabstrip = $("#tabstrip").kendoTabStrip({
-        animation: { open: { effects: "fadeIn" } },
+        // animation: { open: { effects: "fadeIn" } },
         dataTextField: "text",
         dataContentUrlField: "ContentUrl",
         dataSource: [
@@ -138,8 +133,17 @@
           var tabsElements = $('#tabstrip li[role="tab"]:last-child');
           tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
           $("#tabstrip").kendoTabStrip().data("kendoTabStrip").activateTab(tabsElements)
+          contAddHeight()
+        }else {
+          let n = tabstrip._contentUrls.indexOf(url)
+          $("#tabstrip").kendoTabStrip().data("kendoTabStrip").select(n)
         }
       })
+      // 计算tab内高度
+      function contAddHeight() {
+        $('#tabstrip>.k-content').addClass("selected")
+      }
+      contAddHeight()
     };
   </script>
 
