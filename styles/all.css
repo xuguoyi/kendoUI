@@ -2,7 +2,6 @@
 @import "./kendo.common.min.css";
 @import "./kendo.rtl.min.css";
 @import "./kendo.default.min.css";
-@import "./kendo.default.mobile.min.css";
 @import "./font-awesome-4.7.0/css/font-awesome.min.css";
 
 html, body, #tabstrip  {
@@ -12,11 +11,10 @@ html, body, #tabstrip  {
 .k-tabstrip-wrapper {
   height: calc(100% - 56px);
 }
-.hd {
+.k-header.hd {
   display: flex;
   height: 54px;
   width: 100%;
-  background: #aaa;
   padding: 0 20px;
   box-sizing: border-box;
   justify-content: space-between;
@@ -24,29 +22,41 @@ html, body, #tabstrip  {
 .logo {
   background: url(./images/logo.png) 0 center no-repeat;
   width: 130px;
-  padding-left: 220px;
+  padding-left: 145px;
   line-height: 20px;
   font-size: 16px;
   letter-spacing: 2px;
   flex-shrink: 0;
+  margin-left: 20px;
 }
 .logo>h4:first-child {
   margin-top: 8px;
 }
-.hd .menu .k-menu .k-item>.k-link, 
-.hd .menu .k-menu .k-menu-scroll-wrapper .k-item>.k-link, 
-.hd .menu .k-menu .k-popups-wrapper .k-item>.k-link {
-  padding: 18px;
-}
 .menu {
-  width: calc(100% - 575px)
+  width: 100%;
+  height: 54px;
+}
+.menu>#horizontalMenu {
+  display: none;
+}
+.horizontal, 
+#horizontalMenu, 
+#horizontalMenu.k-menu .k-item,
+#horizontalMenu.k-menu .k-item>.k-link,
+#horizontalMenu.k-menu-scroll-wrapper .k-item>.k-link, 
+#horizontalMenu.k-popups-wrapper .k-item>.k-link {
+  height: 100%;
+}
+#horizontalMenu.k-menu .k-item>.k-link,
+#horizontalMenu.k-menu-scroll-wrapper .k-item>.k-link, 
+#horizontalMenu.k-popups-wrapper .k-item>.k-link {
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
 }
 .links {
+  display: flex;
   flex-shrink: 0;
-}
-.hd .links .k-toolbar>* {
-  margin-top: 8px;
-  margin-bottom: 8px;
 }
 #panelbar {
   width: 100%;
@@ -116,4 +126,38 @@ html, body, #tabstrip  {
 }
 .selected {
   height: calc(100% - 60px)!important;
+}
+label.required {
+  position: relative;
+}
+label.required:after {
+  content: '*';
+  color: #f00;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  font-size: 16px;
+}
+
+/* 主题弹窗 */
+#s-l-themes>.color-block {
+  display: flex;
+  flex-wrap: wrap;
+}
+#s-l-themes>.color-block>div {
+  padding: 5px 0;
+  width: 33%;
+  display: flex;
+  cursor: pointer;
+}
+#s-l-themes>.color-block>div:hover,
+#s-l-themes>.color-block>div.selected {
+  background: rgba(0,0,0,0.1)
+}
+.themeDot {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 5px;
 }

@@ -8,15 +8,15 @@
 </head>
 
 <body>
-    <header class="menu">
+  <!-- <header class="k-content hd"> -->
+    
+    <div class="menu">
       <ul id="horizontalMenu">
-          <li>
-            <div class="logo">
-              <h4>原材料控制系统</h4>
-              <h4>(MCS)</h4>
-            </div>
-          </li>
-        <li style="margin-left: calc(100% - 920px)">
+        <div class="logo">
+          <h4>原材料控制系统</h4>
+          <h4>(MCS)</h4>
+        </div>
+        <li>
           Demo
           <ul>
             <li url="./form.html">表单</li>
@@ -56,43 +56,71 @@
         <li>Brands</li>
         <li url="./accessories.html">Accessories</li>
         <li url="./promotions.html">Promotions</li>
-        <li><i class="fa fa-user-circle"></i>
-          <ul>
-            <li>厂区</li>
-            <li>修改密码</li>
-          </ul>
-        </li>
-        <li><i class="fa fa-info"></i></li>
-        <li><i class="fa fa-repeat"></i></li>
+        <div id="toolbar"></div>
       </ul>
-    </header>
+    </div>
+    <!-- <div class="links">
+      
+    </div> -->
+  <!-- </header> -->
   <div id="tabstrip"></div>
-  <div id="changeThemeWindow"></div>
 
   <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
-  <script type="text/x-kendo-template" id="allTheme">
-    
-  </script>
   <script>
     function requireReady() {
-      var themeWindow = $("#changeThemeWindow")
+      function includeLinkStyle(url) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.type = "text/css";
+        link.href = url;
+        document.getElementsByTagName("html")[0].appendChild(link);
+      }
+        
+      includeLinkStyle("../../styles/kendo.black.min.css");
       $("#horizontalMenu").kendoMenu({
         scrollable: true
       });
 
-      // changeTheme
-      $('.fa-info').closest('li').click(function() {
-        openThemeDialog()
-      })
-      function openThemeDialog() {
-        //选择货位弹出框
-        themeWindow.kendoWindow({
-          width: "615px",
-          title: "Change Theme",
-          content: "./theme.html"
-        });
-        themeWindow.data("kendoWindow").center().open();
-      }
+      $("#toolbar").kendoToolBar({
+        items: [
+          {
+              type: "splitButton",
+              id: "button1",
+              text: "Admin",
+              menuButtons: [
+                  { text: "Action 1", id: "action1" },
+                  { text: "Action 2", id: "action2" },
+                  { text: "Action 3", id: "action3" }
+              ]
+          },
+          {
+              type: "button",
+              id: "button2",
+              text: "消息",
+          },
+          {
+              type: "button",
+              id: "button3",
+              text: "Themes",
+          },
+          {
+              type: "button",
+              id: "button4",
+              text: "退出",
+          }
+        ],
+      });
+
+      $('#badge-overlay').kendoBadge({
+        color: 'primary',
+        shape: 'rectangle'
+      });
+
+      $('#badge-inbox').kendoBadge({
+        color: 'info',
+        shape: 'rounded'
+      });
+
 
       var tabstrip = $("#tabstrip").kendoTabStrip({
         // animation: { open: { effects: "fadeIn" } },
@@ -129,6 +157,7 @@
       $("#horizontalMenu li").on("click", function () {
         let text = $(this).text()
         let url = $(this).attr('url')
+        console.log(tabstrip._contentUrls, 'add')
         if (url && !tabstrip._contentUrls.includes(url)) {
           tabstrip.append(
             [{
@@ -150,20 +179,6 @@
         $('#tabstrip>.k-content').addClass("selected")
       }
       contAddHeight()
-
-      // localStorage获取theme
-      if(localStorage.getItem("theme")) {
-        includeLinkStyle(localStorage.getItem("theme"));
-      }
-
-      function includeLinkStyle(url) {
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.type = "text/css";
-        link.href = url;
-        document.getElementsByTagName("html")[0].appendChild(link);
-      }
-
     };
   </script>
 

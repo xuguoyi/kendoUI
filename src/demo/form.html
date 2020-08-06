@@ -1,6 +1,7 @@
 <div class="all-form">
   <h1 class="form-title">表单</h1>
   <div id="validation-success"></div>
+  <nav id="stepper"></nav>
   <div class="form-content">
     <ul id="panelbar">
       <li id="item1">基本信息
@@ -13,11 +14,11 @@
           <div id="grid"></div>
         </div>
       </li>
-      <li id="item3">明细信息
+      <!-- <li id="item3">明细信息
         <div>
           <div id="info-grid"></div>
         </div>
-      </li>
+      </li> -->
     </ul>
     <div id="dialog"></div>
     <div class="oper-btn">
@@ -29,6 +30,23 @@
 </div>
 <script type="text/javascript">
   var validationSuccess = $("#validation-success");
+  // 状态
+  $("#stepper").kendoStepper({
+      steps: [{
+          label: "新建",
+          icon: "home"
+      },{
+          label: "收货中",
+          icon: "gear"
+      },{
+          label: "货位分配中",
+          icon: "attachment"
+      },{
+          label: "收货完成",
+          icon: "save"
+      }]
+  });
+
   // panelbar
   $("#panelbar").kendoPanelBar();
   var panelBar = $("#panelbar").data("kendoPanelBar")
@@ -161,7 +179,7 @@
     }
   });
 
-  $("#grid").kendoGrid({
+  var grid = $("#grid").kendoGrid({
     dataSource: dataSource,
     // pageable: true,
     // height: 350,
@@ -175,6 +193,19 @@
       createAt: "bottom"
     },
   });
+
+  grid.bind("save", grid_save);
+  function grid_save(e) {
+    if (e.values.name !== "") {
+      // the user changed the name field
+      if (e.values.name !== e.model.name) {
+        console.log("name is modified");
+      }
+    } else {
+        e.preventDefault();
+        console.log("name cannot be empty");
+    }
+  }
 
   function categoryDropDownEditor(container, options) {
     $('<input required name="' + options.field + '"/>')
@@ -354,6 +385,8 @@
   $('.fa-save').on('click', function () {
     $("#exampleform").find('.k-form-submit').trigger('click')
     console.log($('#grid').data("kendoGrid")._data)
+    grid.save
+    console.log(grid)
   })
 
   $('.fa-close').on('click', function () {
@@ -362,10 +395,7 @@
     $("#tabstrip").data("kendoTabStrip").select(0);
   })
 
+  // 必填
+  $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
+
 </script>
-<!-- <script id="template" type="text/x-kendo-template">
-  <div class="template-wrapper">
-      <img src="../content/web/foods/200/#=target.data('id')#.jpg" alt="#=target.data('title')#" />
-      <p>#=target.data('title')#</p>
-  </div>
-</script> -->
