@@ -1,72 +1,76 @@
 <!DOCTYPE html>
 <html id="html">
-
 <head>
   <title>menu</title>
   <meta charset="utf-8">
+  <link href="../../styles/kendo.default.min.css" rel="stylesheet">
   <link href="../../styles/all.css" rel="stylesheet">
 </head>
 
 <body>
-    <header class="menu">
-      <ul id="horizontalMenu">
-          <li>
-            <div class="logo">
-              <h4>原材料控制系统</h4>
-              <h4>(MCS)</h4>
-            </div>
-          </li>
-        <li style="margin-left: calc(100% - 920px)">
-          Demo
-          <ul>
-            <li url="./form.html">表单</li>
-            <li url="./frozen.html">Frozen and Editable</li>
-            <li>Knitwear</li>
-            <li>Shirts</li>
-            <li>Belts</li>
-            <li>Socks</li>
-            <li>Fan Zone</li>
-          </ul>
-        </li>
+  <header class="menu">
+    <ul id="horizontalMenu">
         <li>
-          Ladies
-          <ul>
-            <li>Jackets and Coats</li>
-            <li>Jeans</li>
-            <li>Knitwear</li>
-            <li>Shirts</li>
-            <li>Belts</li>
-            <li>Socks</li>
-            <li>Fan Zone</li>
-          </ul>
+          <div class="logo">原材料控制系统</div>
         </li>
-        <li>
-          Kids
-          <ul>
-            <li>Jackets and Coats</li>
-            <li>Jeans</li>
-            <li>Knitwear</li>
-            <li>Shirts</li>
-            <li>Belts</li>
-            <li>Socks</li>
-            <li>Fan Zone</li>
-          </ul>
-        </li>
-        <li>Sports</li>
-        <li>Brands</li>
-        <li url="./accessories.html">Accessories</li>
-        <li url="./promotions.html">Promotions</li>
-        <li><i class="fa fa-user-circle"></i>
-          <ul>
-            <li>厂区</li>
-            <li>修改密码</li>
-          </ul>
-        </li>
-        <li><i class="fa fa-info"></i></li>
-        <li><i class="fa fa-repeat"></i></li>
-      </ul>
-    </header>
+      <li style="margin-left: calc(100% - 1000px)">
+        Demo
+        <ul>
+          <li url="./form.html">表单</li>
+          <li url="./frozen.html">Frozen and Editable</li>
+          <li>Knitwear</li>
+          <li>Shirts</li>
+          <li>Belts</li>
+          <li>Socks</li>
+          <li>Fan Zone</li>
+        </ul>
+      </li>
+      <li>
+        Ladies
+        <ul>
+          <li>Jackets and Coats</li>
+          <li>Jeans</li>
+          <li>Knitwear</li>
+          <li>Shirts</li>
+          <li>Belts</li>
+          <li>Socks</li>
+          <li>Fan Zone</li>
+        </ul>
+      </li>
+      <li>
+        Kids
+        <ul>
+          <li>Jackets and Coats</li>
+          <li>Jeans</li>
+          <li>Knitwear</li>
+          <li>Shirts</li>
+          <li>Belts</li>
+          <li>Socks</li>
+          <li>Fan Zone</li>
+        </ul>
+      </li>
+      <li>Sports</li>
+      <li>Brands</li>
+      <li url="./accessories.html">Accessories</li>
+      <li url="./promotions.html">Promotions</li>
+      <li><i class="fa fa-user-circle"></i>
+        <ul>
+          <li>厂区</li>
+          <li>修改密码</li>
+        </ul>
+      </li>
+      <li><i class="fa fa-info"></i></li>
+      <li><i class="fa fa-repeat"></i></li>
+    </ul>
+  </header>
   <div id="tabstrip"></div>
+  <div class="oper-tab">
+    <i class="fa fa-bars"></i>
+    <div class="oper-btn">
+      <div class="close-other">关闭其它</div>
+      <div class="close-all">关闭所有</div>
+    </div>
+  </div>
   <div id="changeThemeWindow"></div>
 
   <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
@@ -85,7 +89,6 @@
         openThemeDialog()
       })
       function openThemeDialog() {
-        //选择货位弹出框
         themeWindow.kendoWindow({
           width: "615px",
           title: "Change Theme",
@@ -94,6 +97,7 @@
         themeWindow.data("kendoWindow").center().open();
       }
 
+      // 初始化tab
       var tabstrip = $("#tabstrip").kendoTabStrip({
         // animation: { open: { effects: "fadeIn" } },
         dataTextField: "text",
@@ -105,10 +109,10 @@
           }
         ]
       }).data('kendoTabStrip')
-
       var tabToActivate = $("#tabstrip li:first")
       tabstrip.activateTab(tabToActivate)
 
+      // 移除tab
       var configureCloseTab = function () {
         var tabsElements = $('#tabstrip li[role="tab"]:gt(0)');
         tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
@@ -126,6 +130,7 @@
       });
       configureCloseTab()
 
+      // 添加tab
       $("#horizontalMenu li").on("click", function () {
         let text = $(this).text()
         let url = $(this).attr('url')
@@ -164,14 +169,31 @@
         document.getElementsByTagName("html")[0].appendChild(link);
       }
 
+      // 关闭其它
+      $('.close-other').click(function() {
+        let n = $('#tabstrip li[role="tab"]').length
+        let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
+        for(let i=1; i<idx-1; i++) {
+          tabstrip.remove(1)
+        }
+        for(let i=2; i<n; i++) {
+          tabstrip.remove(2)
+        }
+        tabstrip.select(1)
+      })
+
+      // 关闭所有
+      $('.close-all').click(function() {
+        let n = $('#tabstrip li[role="tab"]').length
+        for(let i=1; i<n; i++) {
+          tabstrip.remove(1)
+        }
+        tabstrip.select(0)
+      })
+
     };
   </script>
 
-  <style>
-    .k-menu-scroll-wrapper.horizontal li.k-item.k-last {
-      border-right-width: 0;
-    }
-  </style>
 
 
 </body>

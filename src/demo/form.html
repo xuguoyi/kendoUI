@@ -14,11 +14,11 @@
           <div id="grid"></div>
         </div>
       </li>
-      <!-- <li id="item3">明细信息
+      <li id="item3">明细信息
         <div>
           <div id="info-grid"></div>
         </div>
-      </li> -->
+      </li>
     </ul>
     <div id="dialog"></div>
     <div class="oper-btn">
@@ -53,7 +53,7 @@
   panelBar.expand($('[id^="item"]'))
 
   // form
-  $("#exampleform").kendoForm({
+  var exampleform = $("#exampleform").kendoForm({
     orientation: "horizontal",
     formData: {
       FirstName: "John",
@@ -63,6 +63,9 @@
       City: "Strasbourg",
       AddressLine: new Date(),
       Effective: false,
+      Categories: '',
+      Products: '',
+      Orders: '',
       Remark: 'erereeeeeee'
     },
     layout: "grid",
@@ -92,10 +95,46 @@
           },
           {
             field: "Email",
-            label: "Email",
+            label: "Email:",
             validation: {
               required: true,
               email: true
+            }
+          },
+          {
+            field: "Categories",
+            label: "Categories:",
+            editor: 'DropDownList',
+            editorOptions: {
+              optionLabel: "Select category...",
+              dataTextField: "CategoryName",
+              dataValueField: "CategoryID",
+              dataSource: {
+                  type: "odata",
+                  serverFiltering: true,
+                  transport: {
+                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                  }
+              }
+            }
+          },
+          {
+            field: "Orders",
+            label: "Orders:",
+            editor: 'DropDownList',
+            editorOptions: {
+              autoBind: false,
+              cascadeFrom: "Products",
+              optionLabel: "Select order...",
+              dataTextField: "Order.ShipCity",
+              dataValueField: "OrderID",
+              dataSource: {
+                  type: "odata",
+                  serverFiltering: true,
+                  transport: {
+                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
+                  }
+              }
             }
           }
         ]
@@ -107,9 +146,9 @@
         items: [
           {
             field: "Country",
+            label: "Country:",
             editor: "DropDownList",
-            label: "Country",
-            validation: { required: true },
+            // validation: { required: true },
             editorOptions: {
               optionLabel: "Select...",
               dataSource: [
@@ -124,17 +163,37 @@
           },
           {
             field: "AddressLine",
-            label: "Address Line",
+            label: "Address Line:",
             optional: true,
             validation: { required: true }
           },
           {
             field: "Effective",
-            label: "Effective",
+            label: "Effective:",
             editor: "Switch"
           },
+          {
+            field: "Products",
+            label: "Products:",
+            editor: 'DropDownList',
+            editorOptions: {
+              autoBind: false,
+              cascadeFrom: "Categories",
+              optionLabel: "Select product...",
+              dataTextField: "ProductName",
+              dataValueField: "ProductID",
+              dataSource: {
+                  type: "odata",
+                  serverFiltering: true,
+                  transport: {
+                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                  }
+              }
+            }
+          }
         ]
-      }, {
+      }, 
+      {
         type: "group",
         layout: "grid",
         grid: { cols: 1 },
@@ -150,13 +209,14 @@
     validateField: function (e) {
       validationSuccess.html("");
     },
-    submit: function (e) {
-      e.preventDefault();
-      validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
-    },
-    clear: function (ev) {
-      validationSuccess.html("");
-    }
+    // submit: function (e) {
+    //   console.log(e.model, 'e');
+    //   e.preventDefault();
+    //   validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+    // },
+    // clear: function (ev) {
+    //   validationSuccess.html("");
+    // }
   });
 
   // grid
@@ -185,7 +245,10 @@
     // height: 350,
     toolbar: ["create"],
     columns: [
-      { field: "ProductName", title: "Product Name" },
+      { field: "ProductName", 
+        title: "Product Name", 
+        headerAttributes: {"class": "required"}
+      },
       { field: "Category", title: "Category", width: "180px", editor: categoryDropDownEditor, template: "#=Category.CategoryName#" },
       { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
       { command: "destroy", title: " ", width: "150px" }],
@@ -193,19 +256,6 @@
       createAt: "bottom"
     },
   });
-
-  grid.bind("save", grid_save);
-  function grid_save(e) {
-    if (e.values.name !== "") {
-      // the user changed the name field
-      if (e.values.name !== e.model.name) {
-        console.log("name is modified");
-      }
-    } else {
-        e.preventDefault();
-        console.log("name cannot be empty");
-    }
-  }
 
   function categoryDropDownEditor(container, options) {
     $('<input required name="' + options.field + '"/>')
@@ -222,7 +272,6 @@
         ]
       });
   }
-
 
   // 明细
   var dataSource = new kendo.data.DataSource({
@@ -382,11 +431,21 @@
     }
   }).data("kendoTooltip");
 
+  // 表单必填校验
   $('.fa-save').on('click', function () {
-    $("#exampleform").find('.k-form-submit').trigger('click')
-    console.log($('#grid').data("kendoGrid")._data)
-    grid.save
-    console.log(grid)
+    var validatable = $("#panelbar").kendoValidator().data("kendoValidator");
+    if (validatable.validate() === false) {
+        var errors = validatable.errors();
+        $(errors).each(function() {
+          $("#errors").html(this);
+        });
+      }else {
+        console.log(exampleform.data("kendoForm")._model)
+        console.log(grid.data("kendoGrid")._data)
+        console.log($('#info-grid').data('kendoGrid')._data,'info')
+        console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
+        validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+      }
   })
 
   $('.fa-close').on('click', function () {
