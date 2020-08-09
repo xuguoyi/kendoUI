@@ -51,8 +51,14 @@ if(theme) {
 }
 
 $('.color-block div').click(function() {
-  localStorage.setItem("theme", $(this).attr('data'))
-  window.location.reload(true)
+  const theme = $(this).attr('data');
+  localStorage.setItem("theme", theme);
+  let $theme = $('#page-theme');
+  if(!$theme.length){
+    $theme = $('<link rel="stylesheet" href="'+theme+'" id="page-theme">').insertAfter($('head'));
+  }else{
+    $theme.attr('href', theme);
+  }
 })
 
 </script>
