@@ -3,12 +3,12 @@
 require.config({
   waitSeconds: 0,
   paths: {
-    jquery: "jquery.min",
+    jquery: "jquery.min"
   },
   shim: {
     'kendo.all.min': {
       deps: ["jquery"],
-    },
+    }
   },
 });
 

@@ -25,6 +25,7 @@
       <button title="保存"><i class="fa fa-save"></i></button>
       <button title="关闭"><i class="fa fa-close"></i></button>
       <button title="提交"><i class="fa fa-check"></i></button>
+      <button title="刷新"><i class="fa fa-bath"></i></button>
     </div>
   </div>
 </div>
@@ -66,7 +67,8 @@
       Categories: '',
       Products: '',
       Orders: '',
-      Remark: 'erereeeeeee'
+      Remark: 'erereeeeeee',
+      Remark1: 'dfdfdfdfdf'
     },
     layout: "grid",
     grid: {
@@ -202,6 +204,35 @@
           {
             field: "Remark",
             label: "Remark:",
+          }
+        ]
+      },
+      {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1 },
+        colSpan: 2,
+        items: [
+          {
+            field: "Remark1",
+            label: "下拉多选:",
+            placeholder: "Select products...",
+            dataTextField: "ProductName",
+            dataValueField: "ProductID",
+            autoBind: false,
+            dataSource: {
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                    }
+                }
+            },
+            value: [
+                { ProductName: "Chang", ProductID: 2 },
+                { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
+            ]
           }
         ]
       }
@@ -456,5 +487,9 @@
 
   // 必填
   $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
+
+  $(".fa-bath").click(function() {
+    $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
+  })
 
 </script>

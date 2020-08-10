@@ -17,7 +17,7 @@
         <ul>
           <li url="./form.html">表单</li>
           <li url="./frozen.html">Frozen and Editable</li>
-          <li>Knitwear</li>
+          <li url="./plan.html">入库计划</li>
           <li>Shirts</li>
           <li>Belts</li>
           <li>Socks</li>
@@ -59,6 +59,13 @@
         </ul>
       </li>
       <li><i class="fa fa-info"></i></li>
+      <li><i class="fa fa-globe"></i>
+        <ul class="lang-change">
+          <li lang="zh-CN">中文</li>
+          <li lang="en-CA">英文</li>
+          <li lang="ja-JP">日文</li>
+        </ul>
+      </li>
       <li><i class="fa fa-repeat"></i></li>
     </ul>
   </header>
@@ -104,7 +111,8 @@
         dataSource: [
           {
             text: "首页",
-            ContentUrl: "./app.html"
+            // ContentUrl: "./taillayout.html"
+            ContentUrl: './app.html'
           }
         ]
       }).data('kendoTabStrip')
@@ -169,6 +177,21 @@
         }
       }
 
+      // 国际化
+      // if(localStorage.getItem("language")) {
+      //   let lang = localStorage.getItem("language")
+      //   let script = $('<script type="text/javascript"><\/script>');
+      //   script.attr('src', `../../js/messages/kendo.messages.${lang}.min.js`);
+      //   $('head').append(script);
+      // }
+
+      // $(".lang-change li").click(function() {
+      //   let lang = $(this).attr('lang')
+      //   if(lang) {
+      //     localStorage.setItem("language", lang)
+      //   }
+      // })
+
       // 关闭其它
       $('.close-other').click(function() {
         let n = $('#tabstrip li[role="tab"]').length
@@ -193,9 +216,6 @@
 
     };
   </script>
-
-
-
 </body>
 
 </html>

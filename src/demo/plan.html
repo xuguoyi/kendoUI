@@ -1,0 +1,483 @@
+<div class="all-form plan">
+  <h1 class="form-title">入库计划明细</h1>
+  <div id="validation-success"></div>
+  <nav id="stepper"></nav>
+  <div class="form-content">
+    <ul id="panelbar">
+      <li id="item1">基本信息
+        <div>
+          <form id="exampleform"></form>
+        </div>
+      </li>
+      <li id="item2">动态行
+        <div>
+          <div id="grid"></div>
+        </div>
+      </li>
+      <li id="item3">明细信息
+        <div>
+          <div id="info-grid"></div>
+        </div>
+      </li>
+    </ul>
+    <div id="dialog"></div>
+    <div class="oper-btn">
+      <button title="保存"><i class="fa fa-save"></i></button>
+      <button title="关闭"><i class="fa fa-close"></i></button>
+      <button title="提交"><i class="fa fa-check"></i></button>
+      <button title="刷新"><i class="fa fa-bath"></i></button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var validationSuccess = $("#validation-success");
+  // 状态
+  $("#stepper").kendoStepper({
+      steps: [{
+          label: "新建",
+          icon: "home"
+      },{
+          label: "收货中",
+          icon: "gear"
+      },{
+          label: "货位分配中",
+          icon: "attachment"
+      },{
+          label: "收货完成",
+          icon: "save"
+      }]
+  });
+
+  // panelbar
+  $("#panelbar").kendoPanelBar();
+  var panelBar = $("#panelbar").data("kendoPanelBar")
+  panelBar.expand($('[id^="item"]'))
+
+  // form
+  var exampleform = $("#exampleform").kendoForm({
+    orientation: "horizontal",
+    formData: {
+      order_no: "John",
+      status: "Doe",
+      inbound_order_id: "john.doe@email.com",
+      inbound_type_id: "1",
+      reference_doc_no: 'erer',
+      City: "Strasbourg",
+      AddressLine: new Date(),
+      Effective: false,
+      Categories: '',
+      Products: '',
+      Orders: '',
+      Remark: 'erereeeeeee',
+      Remark1: 'dfdfdfdfdf'
+    },
+    layout: "grid",
+    grid: {
+      cols: 2,
+      // gutter: 20
+    },
+    items: [
+      {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1, gutter: 10 },
+        items: [
+          {
+            field: "order_no",
+            label: "入库计划号:",
+          },
+          {
+            field: "inbound_order_id",
+            label: "入库订单号:"
+          },
+          {
+            field: "inbound_type_id",
+            label: "业务单据号:"
+          },
+          {
+            field: "Categories",
+            label: "Categories:",
+            editor: 'DropDownList',
+            editorOptions: {
+              optionLabel: "Select category...",
+              dataTextField: "CategoryName",
+              dataValueField: "CategoryID",
+              dataSource: {
+                  type: "odata",
+                  serverFiltering: true,
+                  transport: {
+                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                  }
+              }
+            }
+          },
+          {
+            field: "Orders",
+            label: "Orders:",
+            editor: 'DropDownList',
+            editorOptions: {
+              autoBind: false,
+              cascadeFrom: "Products",
+              optionLabel: "Select order...",
+              dataTextField: "Order.ShipCity",
+              dataValueField: "OrderID",
+              dataSource: {
+                  type: "odata",
+                  serverFiltering: true,
+                  transport: {
+                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
+                  }
+              }
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1, gutter: 10 },
+        items: [
+          {
+            field: "status",
+            label: "状态:",
+            editor: "DropDownList",
+            // validation: { required: true },
+            editorOptions: {
+              optionLabel: "Select...",
+              dataSource: [
+                { Name: "France", Id: 1 },
+                { Name: "Germany", Id: 2 },
+                { Name: "Italy", Id: 3 },
+                { Name: "Spain", Id: 4 }
+              ],
+              dataTextField: "Name",
+              dataValueField: "Id"
+            }
+          },
+          {
+            field: "inbound_type_id",
+            label: "入库类型:",
+            optional: true,
+            validation: { required: true, min: 2 }
+          },
+          {
+            field: "arrival_date",
+            label: "到货日期:",
+            editor: "Switch"
+          },
+          {
+            field: "Products",
+            label: "Products:",
+            editor: 'DropDownList',
+            editorOptions: {
+              autoBind: false,
+              cascadeFrom: "Categories",
+              optionLabel: "Select product...",
+              dataTextField: "ProductName",
+              dataValueField: "ProductID",
+              dataSource: {
+                  type: "odata",
+                  serverFiltering: true,
+                  transport: {
+                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                  }
+              }
+            }
+          }
+        ]
+      }, 
+      {
+        type: "group",
+        layout: "grid",
+        grid: { cols: 1 },
+        colSpan: 2,
+        items: [
+          {
+            field: "Remark",
+            label: "Remark:",
+          },
+          {
+            field: "Remark1",
+            label: "下拉多选:",
+            placeholder: "Select products...",
+            dataTextField: "ProductName",
+            dataValueField: "ProductID",
+            autoBind: false,
+            dataSource: {
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                    read: {
+                        url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
+                    }
+                }
+            },
+            value: [
+                { ProductName: "Chang", ProductID: 2 },
+                { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
+            ]
+          }
+        ]
+      }
+    ],
+    validateField: function (e) {
+      validationSuccess.html("");
+    },
+    // submit: function (e) {
+    //   console.log(e.model, 'e');
+    //   e.preventDefault();
+    //   validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+    // },
+    // clear: function (ev) {
+    //   validationSuccess.html("");
+    // }
+  });
+
+  // grid
+  var dataSource = new kendo.data.DataSource({
+    pageSize: 20,
+    data: [
+      { ProductName: 'wewewe', Category: { CategoryID: 1, CategoryName: "Beverages" }, UnitPrice: 2 }
+    ],
+    autoSync: true,
+    schema: {
+      model: {
+        id: "ProductID",
+        fields: {
+          ProductID: { editable: false, nullable: true },
+          ProductName: { validation: { required: true } },
+          Category: { defaultValue: { CategoryID: 1, CategoryName: "Beverages" } },
+          UnitPrice: { type: "number", validation: { required: true, min: 1 } }
+        }
+      }
+    }
+  });
+
+  var grid = $("#grid").kendoGrid({
+    dataSource: dataSource,
+    // pageable: true,
+    // height: 350,
+    toolbar: ["create"],
+    columns: [
+      { field: "ProductName", 
+        title: "Product Name", 
+        headerAttributes: {"class": "required"}
+      },
+      { field: "Category", title: "Category", width: "180px", editor: categoryDropDownEditor, template: "#=Category.CategoryName#" },
+      { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
+      { command: "destroy", title: " ", width: "150px" }],
+    editable: {
+      createAt: "bottom"
+    },
+  });
+
+  function categoryDropDownEditor(container, options) {
+    $('<input required name="' + options.field + '"/>')
+      .appendTo(container)
+      .kendoDropDownList({
+        autoBind: false,
+        dataTextField: "CategoryName",
+        dataValueField: "CategoryID",
+        dataSource: [
+          { CategoryName: "Beverages", CategoryID: "1" },
+          { CategoryName: "Polyester", CategoryID: "2" },
+          { CategoryName: "Cotton/Polyester", CategoryID: "3" },
+          { CategoryName: "Rib Knit", CategoryID: "4" }
+        ]
+      });
+  }
+
+  // 明细
+  var dataSource = new kendo.data.DataSource({
+    type: "odata",
+    transport: {
+      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
+    },
+    pageSize: 5,
+    serverPaging: true,
+    serverSorting: true
+  });
+  var ids = {};
+  var info_data = {};
+  var myWindow = $("#dialog")
+  $("#info-grid").kendoGrid({
+    dataSource: dataSource,
+    // pageable:false,
+    pageable: {
+      // pageSize:5,
+      refresh: true
+    },
+    columns: [
+      {
+        width: 150, command: [
+          {
+            name: '选择货位',
+            click: function (e) {
+              e.preventDefault();
+              var tr = $(e.target).closest("tr");
+              var data = this.dataItem(tr);
+              parentId = data.EmployeeID;
+              if (!info_data[parentId]) {
+                info_data[parentId] = []
+              }
+
+              if (!ids[parentId]) {
+                ids[parentId] = []
+              }
+              //选择货位弹出框
+              myWindow.kendoWindow({
+                width: "615px",
+                title: "Rams's Ten Principles of Good Design",
+                content: "./window.html"
+              });
+              myWindow.data("kendoWindow").center().open();
+            }
+          }
+        ]
+      },
+      {
+        field: "FirstName",
+        title: "First Name",
+        width: "120px"
+      },
+      {
+        field: "LastName",
+        title: "Last Name",
+        width: "120px"
+      },
+      {
+        field: "Country",
+        width: "120px"
+      },
+      {
+        field: "City",
+        width: "120px"
+      },
+      {
+        field: "Title"
+      }
+    ],
+    detailTemplate: '<div id="split-grid"></div>',
+    detailExpand: function (e) {
+      var id = this.dataItem(e.masterRow).EmployeeID
+      e.detailRow.find("#split-grid").data("kendoGrid").dataSource.read({
+        data: info_data[id]
+      })
+      // 点击展开时，添加自定义属性
+      e.masterRow.attr("data-id", id);
+    },
+    detailInit: function (e) {
+      var id = this.dataItem(e.detailRow.prev("tr")).EmployeeID;
+      info_data[id] = [{ OrderID: 10258, ShipAddress: "Kirchgasse 6" }];
+      ids[id] = [10258];
+      e.detailRow.find("#split-grid").kendoGrid({
+        dataSource: {
+          // data: info_data[id],
+          // pageSize:10,
+          transport: {
+            //动态改变数据的时候
+            read: function (operation) {
+              var data = operation.data.data || [];
+              operation.success(data);
+            }
+          },
+          // autoSync: true,
+          schema: {
+            model: {
+              fields: {
+                ShipCountry: { editable: false },
+                OrderID: { editable: false },
+              }
+            }
+          }
+        },
+        // toolbar:[
+        //     { name:'save' }
+        // ],
+        editable: true,
+        columns: [
+          { width: 150, command: 'destroy' },
+          {
+            field: "ShipCountry", title: "货区", width: 200,
+            attributes: { class: 'cargopositionNo' },
+            editable: function () { return true }
+          },
+          {
+            field: "location_id", title: "货位", width: 200,
+            attributes: { class: 'cargopositionNo' },
+            editable: function () { return true }
+          },
+          {
+            field: "ShipAddress", title: "入库工装数量", width: 200,
+            attributes: { class: 'toolNumber' },
+            editable: function () { return false }
+          },
+          { field: 'OrderID', title: '&nbsp;', editable: function () { return false } }
+        ],
+
+        pageable: false
+      })
+    },
+    dataBinding: function (e) {
+      if (e.action === "itemchange") {
+        e.preventDefault();
+      }
+    },
+    dataBound: function () {
+      // 获取当前点击行的index值
+      var commands = $("#info-grid .k-master-row .k-command-cell a");
+      for (var i = 0; i < commands.length; i++) {
+        var a = commands[i];
+        //给每个className为child的元素添加index属性;
+        a.index = i;
+        a.onclick = function () {
+          // alert(this.index)
+          index = this.index;
+        }
+      }
+    }
+  })
+
+  // operBtn
+  var tooltip = $(".oper-btn").kendoTooltip({
+    filter: "button",
+    position: "right",
+    animation: {
+      open: {
+        effects: "zoom",
+        duration: 150
+      }
+    }
+  }).data("kendoTooltip");
+
+  // 表单必填校验
+  $('.fa-save').on('click', function () {
+    var validatable = $("#panelbar").kendoValidator().data("kendoValidator");
+    if (validatable.validate() === false) {
+        var errors = validatable.errors();
+        $(errors).each(function() {
+          $("#errors").html(this);
+        });
+      }else {
+        console.log(exampleform.data("kendoForm")._model)
+        console.log(grid.data("kendoGrid")._data)
+        console.log($('#info-grid').data('kendoGrid')._data,'info')
+        console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
+        validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+      }
+  })
+
+  $('.fa-close').on('click', function () {
+    let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
+    $("#tabstrip").data("kendoTabStrip").remove(idx - 1);
+    $("#tabstrip").data("kendoTabStrip").select(0);
+  })
+
+  // 必填
+  $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
+
+  $(".fa-bath").click(function() {
+    $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
+  })
+
+</script>
