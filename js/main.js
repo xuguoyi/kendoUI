@@ -12,8 +12,8 @@ require.config({
   },
 });
 
-require(['kendo.all.min'], function () {
-  
+require(['kendo.all.min', './i18n'], function (kendo, i18n) {
+  window.$t = i18n.$t;
 
   typeof requireReady === "function" && requireReady();
 }, function (err) {

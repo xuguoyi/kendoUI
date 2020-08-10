@@ -178,19 +178,20 @@
       }
 
       // 国际化
-      // if(localStorage.getItem("language")) {
-      //   let lang = localStorage.getItem("language")
-      //   let script = $('<script type="text/javascript"><\/script>');
-      //   script.attr('src', `../../js/messages/kendo.messages.${lang}.min.js`);
-      //   $('head').append(script);
-      // }
+      if(localStorage.getItem("language")) {
+        let lang = localStorage.getItem("language");
+        require([`./i18n`, `../../js/messages/kendo.messages.${lang}.min.js`], function(i18n){
+          i18n.load(lang);
+        });
+      }
 
-      // $(".lang-change li").click(function() {
-      //   let lang = $(this).attr('lang')
-      //   if(lang) {
-      //     localStorage.setItem("language", lang)
-      //   }
-      // })
+      $(".lang-change li").click(function() {
+        let lang = $(this).attr('lang')
+        if(lang && lang !== localStorage.getItem("language")) {
+          localStorage.setItem("language", lang)
+          window.location.reload()
+        }
+      })
 
       // 关闭其它
       $('.close-other').click(function() {
