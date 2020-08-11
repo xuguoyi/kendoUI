@@ -11,7 +11,6 @@ define([], function(){
       msg = messages[form][key] || '';
     }
     $.each(params, function(key, val){
-      debugger
       msg = msg.replace(new RegExp(`{${key}}`, 'ig'), val);
     })
     return msg;
