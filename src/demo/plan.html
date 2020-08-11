@@ -614,10 +614,7 @@
                 if(item.toolNumber != 1) { 
                   $(".toolNumber",this).css('border', '1px solid #f00')
                   var idn = idx+1
-                  var x = $t('plan', 'message')
-                  x = x.replace(/{m}/, idn)
-                  x = x.replace(/{n}/, i)
-                  x = x.replace(/{name}/, $t('plan', 'inbound_pack_qty'))
+                  var x = $t('plan', 'message', {m: idx+1, n:i, name: $t('plan', 'inbound_pack_qty')})
                   mss += "<div class='k-messagebox k-messagebox-error'>"+x+"</div>"
                   
                 }
