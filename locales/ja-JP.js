@@ -1,5 +1,7 @@
 define([], function(){
   return {
-    "orderId": "订单号(日文)"
+    "frozen": {
+      "orderId": "订单号(日文)"
+    }
   }
 });

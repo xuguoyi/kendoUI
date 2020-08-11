@@ -171,3 +171,9 @@ th.required:after {
   display: none;
   /* position: absolute; */
 }
+
+/* window按钮 */
+.window-operBtn {
+  text-align: center;
+  margin-top: 10px;
+}

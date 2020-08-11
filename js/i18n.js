@@ -5,8 +5,8 @@ define([], function(){
       messages = langs;
     });
   }
-  function $t(key){
-    return messages[key] || '';
+  function $t(form, key){
+    return messages[form][key] || '';
   }
   return {load, $t}
 });

@@ -9,12 +9,7 @@
           <form id="exampleform"></form>
         </div>
       </li>
-      <li id="item2">动态行
-        <div>
-          <div id="grid"></div>
-        </div>
-      </li>
-      <li id="item3">明细信息
+      <li id="item3">计划明细
         <div>
           <div id="info-grid"></div>
         </div>
@@ -85,6 +80,11 @@
           {
             field: "order_no",
             label: "入库计划号:",
+            change: function(e) {
+            var value = this.value();
+            console.log(value);
+            // Use the value of the widget
+        }
           },
           {
             field: "inbound_order_id",
@@ -233,69 +233,16 @@
     // }
   });
 
-  // grid
-  var dataSource = new kendo.data.DataSource({
-    pageSize: 20,
-    data: [
-      { ProductName: 'wewewe', Category: { CategoryID: 1, CategoryName: "Beverages" }, UnitPrice: 2 }
-    ],
-    autoSync: true,
-    schema: {
-      model: {
-        id: "ProductID",
-        fields: {
-          ProductID: { editable: false, nullable: true },
-          ProductName: { validation: { required: true } },
-          Category: { defaultValue: { CategoryID: 1, CategoryName: "Beverages" } },
-          UnitPrice: { type: "number", validation: { required: true, min: 1 } }
-        }
-      }
-    }
-  });
-
-  var grid = $("#grid").kendoGrid({
-    dataSource: dataSource,
-    // pageable: true,
-    // height: 350,
-    toolbar: ["create"],
-    columns: [
-      { field: "ProductName", 
-        title: "Product Name", 
-        headerAttributes: {"class": "required"}
-      },
-      { field: "Category", title: "Category", width: "180px", editor: categoryDropDownEditor, template: "#=Category.CategoryName#" },
-      { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
-      { command: "destroy", title: " ", width: "150px" }],
-    editable: {
-      createAt: "bottom"
-    },
-  });
-
-  function categoryDropDownEditor(container, options) {
-    $('<input required name="' + options.field + '"/>')
-      .appendTo(container)
-      .kendoDropDownList({
-        autoBind: false,
-        dataTextField: "CategoryName",
-        dataValueField: "CategoryID",
-        dataSource: [
-          { CategoryName: "Beverages", CategoryID: "1" },
-          { CategoryName: "Polyester", CategoryID: "2" },
-          { CategoryName: "Cotton/Polyester", CategoryID: "3" },
-          { CategoryName: "Rib Knit", CategoryID: "4" }
-        ]
-      });
-  }
-
   // 明细
   var dataSource = new kendo.data.DataSource({
-    type: "odata",
-    transport: {
-      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Employees"
-    },
+    data: [
+      {EmployeeID: 1, status: '新建'},
+      {EmployeeID: 2, status: '新建'},
+      {EmployeeID: 3, status: '新建'}
+    ],
     pageSize: 5,
-    serverPaging: true,
-    serverSorting: true
+    // serverPaging: true,
+    // serverSorting: true
   });
   var ids = {};
   var info_data = {};
@@ -326,9 +273,12 @@
               }
               //选择货位弹出框
               myWindow.kendoWindow({
-                width: "615px",
+                width: "800px",
                 title: "Rams's Ten Principles of Good Design",
-                content: "./window.html"
+                content: "./window.html",
+                modal: {
+                  preventScroll: true
+                }
               });
               myWindow.data("kendoWindow").center().open();
             }
@@ -336,26 +286,205 @@
         ]
       },
       {
-        field: "FirstName",
-        title: "First Name",
-        width: "120px"
+        field: "status",
+        title: "状态" 
       },
       {
-        field: "LastName",
-        title: "Last Name",
-        width: "120px"
+        field: "code",
+        title: "物料代码"
       },
       {
-        field: "Country",
-        width: "120px"
+        field: "name",
+        title: "物料名称"
       },
       {
-        field: "City",
-        width: "120px"
+        field: "authentication_status",
+        title: "认证状态"
       },
       {
-        field: "Title"
-      }
+        field: "quality_flag",
+        title: "品质"
+      },
+      {
+        field: "plan_pack_qty",
+        title: "收货预定包装数"
+      },
+      {
+        field: "plan_qty",
+        title: "收货预定个数"
+      },
+      {
+        field: "plan_total_qty",
+        title: "收货预定总数"
+      },
+      {
+        field: "unit",
+        title: "基本单位"
+      },
+      {
+        field: "min_sale_number",
+        title: "最小销售数"
+      },
+      {
+        field: "standard_package_number",
+        title: "标准包装数"
+      },
+      {
+        field: "is_process",
+        title: "是否加工"
+      },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // },
+      // {
+      //   field: "min_sale_number",
+      //   title: "最小销售数"
+      // }
     ],
     detailTemplate: '<div id="split-grid"></div>',
     detailExpand: function (e) {
@@ -368,7 +497,7 @@
     },
     detailInit: function (e) {
       var id = this.dataItem(e.detailRow.prev("tr")).EmployeeID;
-      info_data[id] = [{ OrderID: 10258, ShipAddress: "Kirchgasse 6" }];
+      info_data[id] = [{ OrderID: 10258, location_area_id: "Kirchgasse 6" }];
       ids[id] = [10258];
       e.detailRow.find("#split-grid").kendoGrid({
         dataSource: {
@@ -398,7 +527,7 @@
         columns: [
           { width: 150, command: 'destroy' },
           {
-            field: "ShipCountry", title: "货区", width: 200,
+            field: "location_area_id", title: "货区", width: 200,
             attributes: { class: 'cargopositionNo' },
             editable: function () { return true }
           },
@@ -408,9 +537,17 @@
             editable: function () { return true }
           },
           {
-            field: "ShipAddress", title: "入库工装数量", width: 200,
+            field: "inbound_pack_qty", title: $t('plan','inbound_pack_qty'), width: 200,
             attributes: { class: 'toolNumber' },
-            editable: function () { return false }
+            editable: function () { return true }
+          },
+          {
+            field: "inbound_qty", title: "入库个数", width: 200,
+            editable: function () { return true }
+          },
+          {
+            field: "inbound_total_qty", title: "入库总数", width: 200,
+            editable: function () { return true }
           },
           { field: 'OrderID', title: '&nbsp;', editable: function () { return false } }
         ],
@@ -459,11 +596,35 @@
           $("#errors").html(this);
         });
       }else {
+        var mss = ''
         console.log(exampleform.data("kendoForm")._model)
-        console.log(grid.data("kendoGrid")._data)
         console.log($('#info-grid').data('kendoGrid')._data,'info')
         console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
-        validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+        var trs = $('#info-grid').data('kendoGrid').items()
+        trs.each(function(idx){
+          if($(this).attr("data-id")){
+            var obj = new Object();
+            obj.warehousingPlansDetailId = $(this).attr("data-id");
+            obj.items = [];
+            var datailGrid = $(this).next("tr");
+            // 遍历子表格的每一行
+            $("tbody tr",datailGrid).each(function(i,j){
+                var item = new Object();
+                item.toolNumber = $(".toolNumber",this).text();
+                if(item.toolNumber != 1) { 
+                  $(".toolNumber",this).css('border', '1px solid #f00')
+                  var idn = idx+1
+                  var x = $t('plan', 'message')
+                  x = x.replace(/{m}/, idn)
+                  x = x.replace(/{n}/, i)
+                  x = x.replace(/{name}/, $t('plan', 'inbound_pack_qty'))
+                  mss += "<div class='k-messagebox k-messagebox-error'>"+x+"</div>"
+                  
+                }
+            })
+          }
+        })
+        validationSuccess.html(mss);
       }
   })
 

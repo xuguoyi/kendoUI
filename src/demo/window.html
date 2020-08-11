@@ -1,4 +1,6 @@
 <div class="pos">
+</div>
+<div class="window-operBtn">
   <button class="determine_window">确定</button>
   <button class="cancel_window">取消</button>
 </div>
@@ -6,10 +8,36 @@
 <script type="text/javascript">
   $(".pos").kendoGrid({
     dataSource: {
-      type: "odata",
-      transport: {
-        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
-      },
+      // type: "odata",
+      // transport: {
+      //   read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+      // },
+      data: [
+        {
+          OrderID: 1,
+          name: 'WX-IN-201801250001',
+          barCode: '1',
+          quality_flag: 'A',
+          authentication_state: '新建',
+          location_area_id: '1',
+          location_id: '1',
+          available_pack_qty: '1',
+          available_qty: '1',
+          available_total_qty: '1'
+        },
+        {
+          OrderID: 2,
+          name: 'WX-IN-201801250002',
+          barCode: '2',
+          quality_flag: 'B',
+          authentication_state: '新建',
+          location_area_id: '2',
+          location_id: '2',
+          available_pack_qty: '2',
+          available_qty: '2',
+          available_total_qty: '2'
+        }
+      ],
       serverPaging: true,
       serverSorting: true,
       serverFiltering: true,
@@ -20,18 +48,23 @@
           id: 'OrderID'
         }
       }
-
     },
     filterable: {
       mode: 'row'
     },
     columns: [
       // { selectable:true, width:50 },
-      { field: "OrderID", title: "ID", width: "70px" },
-      { field: "ShipCountry", title: "Ship Country", width: "110px" },
-      { field: "ShipCountry", title: "Ship Country", width: "110px" },
-      { field: "ShipAddress", title: "Ship Address" },
-      { field: "ShipName", title: "Ship Name", width: "300px" }
+      { field: "OrderID", title: "物料代码" },
+      { field: "name", title: "物料名称" },
+      { field: "barCode", title: "商品条码" },
+      { field: "quality_flag", title: "品质" },
+      { field: "authentication_state", title: "认证状态"},
+      { field: "location_area_id", title: "货区"},
+      { field: "location_id", title: "货位"},
+      // { field: "ShipName", title: "货位", editor: categoryDropDownEditor, template: "#=Category.CategoryName#"},
+      { field: "available_pack_qty", title: "可用包装数"},
+      { field: "available_qty", title: "可用个数"},
+      { field: "available_total_qty", title: "可用总数"}
     ],
     pageable: {
       pageSize: 10,
@@ -51,6 +84,22 @@
       $(".pos").data('sel_data', selectedDataItems);
     }
   })
+
+  function categoryDropDownEditor(container, options) {
+    $('<input required name="' + options.field + '"/>')
+      .appendTo(container)
+      .kendoDropDownList({
+        autoBind: false,
+        dataTextField: "CategoryName",
+        dataValueField: "CategoryID",
+        dataSource: [
+          { CategoryName: "Beverages", CategoryID: "1" },
+          { CategoryName: "Polyester", CategoryID: "2" },
+          { CategoryName: "Cotton/Polyester", CategoryID: "3" },
+          { CategoryName: "Rib Knit", CategoryID: "4" }
+        ]
+      });
+  }
 
   $('.determine_window').on('click', function() {
     $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
@@ -81,4 +130,6 @@
     // 打开对应的子表格
     $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
   }
+
+  $('.determine_window, .cancel_window').kendoButton()
 </script>

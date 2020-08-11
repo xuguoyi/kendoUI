@@ -1,0 +1,121 @@
+<div>
+  <div id="gridSelected"></div>
+  <br>
+  <div id="gridChange"></div>
+</div>
+
+<script type="text/javascript">
+  var orders = [{
+      OrderID : 10248,
+      CustomerID : "VINET",
+      EmployeeID : 5,
+      OrderDate : new Date(1996, 6, 4, 0, 0, 0, 0),
+      RequiredDate : new Date(1996, 7, 1, 0, 0, 0, 0),
+      ShippedDate : new Date(1996, 6, 16, 0, 0, 0, 0),
+      ShipVia : 3,
+      Freight : 32.3800,
+      ShipName : "Vins et alcools Chevalier",
+      ShipAddress : "59 rue de l'Abbaye",
+      ShipCity : "Reims",
+      ShipRegion : "",
+      ShipPostalCode : "51100",
+      ShipCountry : "France"
+  }, {
+      OrderID : 10249,
+      CustomerID : "TOMSP",
+      EmployeeID : 6,
+      OrderDate : new Date(1996, 6, 5, 0, 0, 0, 0),
+      RequiredDate : new Date(1996, 7, 16, 0, 0, 0, 0),
+      ShippedDate : new Date(1996, 6, 10, 0, 0, 0, 0),
+      ShipVia : 1,
+      Freight : 11.6100,
+      ShipName : "Toms Spezialitäten",
+      ShipAddress : "Luisenstr. 48",
+      ShipCity : "Münster",
+      ShipRegion : "",
+      ShipPostalCode : "44087",
+      ShipCountry : "Germany"
+  }]
+  var ordersChange = []
+  var gridSelected = $("#gridSelected").kendoGrid({
+    dataSource: {
+      data: orders,
+      pageSize: 6,
+      schema: {
+        model: {
+          id: "OrderID"
+        }
+      }
+    },
+    selectable: "multiple",
+    pageable: {
+      buttonCount: 5
+    },
+    scrollable: false,
+    persistSelection: true,
+    navigatable: true,
+    dataBound: onDataBound,
+    columns: [
+      {
+        field: "ShipCountry",
+        title: "Ship Country",
+        width: 300
+      },
+      {
+        field: "Freight",
+        width: 300
+      },
+      {
+        field: "OrderDate",
+        title: "Order Date",
+        format: "{0:dd/MM/yyyy}"
+      }
+    ]
+  })
+  function onDataBound(e) {
+    let grid = $('#gridSelected').data('kendoGrid')
+    $(grid.tbody).on("click", "td", function (e) {
+        ordersChange = []
+        var row = $(this).closest("tr");
+        var rowIdx = $("tr", grid.tbody).index(row);
+        ordersChange.push(orders[rowIdx])
+        var dataSource = new kendo.data.DataSource({ data: ordersChange });
+        $('#gridChange').data("kendoGrid").setDataSource(dataSource)
+    });
+  }
+
+  $("#gridChange").kendoGrid({
+    dataSource: {
+      data: [],
+      pageSize: 6,
+      schema: {
+        model: {
+          id: "OrderID"
+        }
+      }
+    },
+    pageable: {
+      buttonCount: 5
+    },
+    scrollable: false,
+    persistSelection: true,
+    navigatable: true,
+    columns: [
+      {
+        field: "ShipCountry",
+        title: "Ship Country",
+        width: 300
+      },
+      {
+        field: "Freight",
+        width: 300
+      },
+      {
+        field: "OrderDate",
+        title: "Order Date",
+        format: "{0:dd/MM/yyyy}"
+      }
+    ]
+  })
+
+</script>
