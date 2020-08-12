@@ -146,7 +146,7 @@
       $("#horizontalMenu li").on("click", function () {
         let text = $(this).text()
         let url = $(this).attr('url')
-        if (url && !tabstrip._contentUrls.includes(url)) {
+        if (url && !~$.inArray(url, tabstrip._contentUrls)) {
           tabstrip.append(
             [{
               text: text,
@@ -185,7 +185,7 @@
       // 国际化
       if(localStorage.getItem("language")) {
         let lang = localStorage.getItem("language");
-        require([`./i18n`, `../../js/messages/kendo.messages.${lang}.min.js`, `../../js/cultures/kendo.culture.${lang}.min.js`], function(i18n){
+        require(['./i18n', '../../js/messages/kendo.messages.'+lang+'.min.js', '../../js/cultures/kendo.culture.'+lang+'.min.js'], function(i18n){
           i18n.load(lang);
         });
       }

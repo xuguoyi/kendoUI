@@ -446,9 +446,7 @@
         field: "is_print_label",
         title: "标签打印",
         width: 150,
-        template: `
-          <input type="checkbox" checked="#: is_print_label #"/>
-        `,
+        template: '<input type="checkbox" checked="#: is_print_label #"/>',
         editable: function(dataItem){return dataItem.status === '收货中'}
       },
       {
@@ -613,10 +611,8 @@
         console.log(exampleform.data("kendoForm")._model)
         console.log($('#info-grid').data('kendoGrid')._data,'info')
         console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
-        let formData = {
-          ...exampleform.data("kendoForm")._model, 
-          remark: $('#remark').val()
-        }
+        var formData = JSON.parse(JSON.stringify(exampleform.data("kendoForm")._model))
+        formData.remark = $('#remark').val()
         console.log(formData, 'formData')
 
         var trs = $('#info-grid').data('kendoGrid').items()

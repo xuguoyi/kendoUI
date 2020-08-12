@@ -27,20 +27,19 @@ var allColorThemes = {
   ]
 }
 
-var html = ''
+var html = '';
 for(let i in allColorThemes) {
-  html += `<h3>${i}</h3><div class="color-block">`
-  allColorThemes[i].forEach(item => {
-    html += `
-      <div data="${item.value}">
-        <span class="themeDot" style="background-color: ${item.colors[0]}"></span>
-        <span class="themeDot" style="background-color: ${item.colors[1]}"></span>
-        <span class="themeDot" style="background-color: ${item.colors[2]}"></span>
-        <span>${item.name}</span>
-      </div>
-    `
-  })
-  html += `</div>`
+  console.log('for in', i)
+  html += '<h3>'+i+'</h3><div class="color-block">';
+  allColorThemes[i].forEach(function(item) {
+    html += '<div data="'+item.value+'">\
+        <span class="themeDot" style="background-color: '+item.colors[0]+'"></span>\
+        <span class="themeDot" style="background-color: '+item.colors[1]+'"></span>\
+        <span class="themeDot" style="background-color: '+item.colors[2]+'"></span>\
+        <span>'+item.name+'</span>\
+      </div>'
+  });
+  html += '</div>'
 }
 $('#s-l-themes').append(html)
 
