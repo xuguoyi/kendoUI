@@ -64,12 +64,12 @@
   }
   var exampleform = $("#exampleform").kendoForm({
     orientation: "horizontal",
-    formData,
-    layout: "grid",
+    formData: formData,
+    // layout: "grid",
     items: [
       {
         type: "group",
-        layout: "grid",
+        // layout: "grid",
         grid: { cols: 2, gutter: 10 },
         items: [
           {
@@ -611,9 +611,9 @@
         console.log(exampleform.data("kendoForm")._model)
         console.log($('#info-grid').data('kendoGrid')._data,'info')
         console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
-        var formData = JSON.parse(JSON.stringify(exampleform.data("kendoForm")._model))
-        formData.remark = $('#remark').val()
-        console.log(formData, 'formData')
+        var newFormData = JSON.parse(JSON.stringify(exampleform.data("kendoForm")._model))
+        newFormData.remark = $('#remark').val()
+        console.log(newFormData, 'formData')
 
         var trs = $('#info-grid').data('kendoGrid').items()
         trs.each(function(idx){
