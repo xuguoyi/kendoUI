@@ -47,176 +47,111 @@
   panelBar.expand($('[id^="item"]'))
 
   // form
+  let formData = {
+    order_no: "SPDO200810000010",
+    status: "待入库",
+    inbound_order_id: "SODO200810000008",
+    inbound_type_id: "采购入库",
+    reference_doc_no: '45008092356',
+    arrival_date: '2020-08-11',
+    remark: '首次采购入库，请对原料性能进行测试。测试完全通过后再入库。',
+    action_flag: '上海XX汽车制造有限公司',
+    management_type: '顺丰速运有限公司',
+    regist_date: '2020-08-10 09:50:22',
+    regist_pname: '陆中杰',
+    last_update_date: '2020-08-12 13:45:10',
+    last_update_pname: '张三'
+  }
   var exampleform = $("#exampleform").kendoForm({
     orientation: "horizontal",
-    formData: {
-      order_no: "John",
-      status: "Doe",
-      inbound_order_id: "john.doe@email.com",
-      inbound_type_id: "1",
-      reference_doc_no: 'erer',
-      City: "Strasbourg",
-      AddressLine: new Date(),
-      Effective: false,
-      Categories: '',
-      Products: '',
-      Orders: '',
-      Remark: 'erereeeeeee',
-      Remark1: 'dfdfdfdfdf'
-    },
+    formData,
     layout: "grid",
-    grid: {
-      cols: 2,
-      // gutter: 20
-    },
     items: [
       {
         type: "group",
         layout: "grid",
-        grid: { cols: 1, gutter: 10 },
+        grid: { cols: 2, gutter: 10 },
         items: [
           {
             field: "order_no",
             label: "入库计划号:",
-            change: function(e) {
-            var value = this.value();
-            console.log(value);
-            // Use the value of the widget
-        }
+            colSpan: 1
           },
-          {
-            field: "inbound_order_id",
-            label: "入库订单号:"
-          },
-          {
-            field: "inbound_type_id",
-            label: "业务单据号:"
-          },
-          {
-            field: "Categories",
-            label: "Categories:",
-            editor: 'DropDownList',
-            editorOptions: {
-              optionLabel: "Select category...",
-              dataTextField: "CategoryName",
-              dataValueField: "CategoryID",
-              dataSource: {
-                  type: "odata",
-                  serverFiltering: true,
-                  transport: {
-                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
-                  }
-              }
-            }
-          },
-          {
-            field: "Orders",
-            label: "Orders:",
-            editor: 'DropDownList',
-            editorOptions: {
-              autoBind: false,
-              cascadeFrom: "Products",
-              optionLabel: "Select order...",
-              dataTextField: "Order.ShipCity",
-              dataValueField: "OrderID",
-              dataSource: {
-                  type: "odata",
-                  serverFiltering: true,
-                  transport: {
-                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
-                  }
-              }
-            }
-          }
-        ]
-      },
-      {
-        type: "group",
-        layout: "grid",
-        grid: { cols: 1, gutter: 10 },
-        items: [
           {
             field: "status",
             label: "状态:",
-            editor: "DropDownList",
-            // validation: { required: true },
-            editorOptions: {
-              optionLabel: "Select...",
-              dataSource: [
-                { Name: "France", Id: 1 },
-                { Name: "Germany", Id: 2 },
-                { Name: "Italy", Id: 3 },
-                { Name: "Spain", Id: 4 }
-              ],
-              dataTextField: "Name",
-              dataValueField: "Id"
-            }
+            colSpan: 1
+          },
+          {
+            field: "inbound_order_id",
+            label: "入库订单号:",
+            colSpan: 1
           },
           {
             field: "inbound_type_id",
             label: "入库类型:",
-            optional: true,
-            validation: { required: true, min: 2 }
+            validation: { required: true},
+            colSpan: 1
+          },
+          {
+            field: "reference_doc_no",
+            label: "业务单据号:",
+            colSpan: 1
           },
           {
             field: "arrival_date",
             label: "到货日期:",
-            editor: "Switch"
-          },
-          {
-            field: "Products",
-            label: "Products:",
-            editor: 'DropDownList',
+            colSpan: 1,
+            editor: 'DatePicker',
             editorOptions: {
-              autoBind: false,
-              cascadeFrom: "Categories",
-              optionLabel: "Select product...",
-              dataTextField: "ProductName",
-              dataValueField: "ProductID",
-              dataSource: {
-                  type: "odata",
-                  serverFiltering: true,
-                  transport: {
-                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
-                  }
-              }
+              format: "yyyy-MM-dd"
             }
-          }
-        ]
-      }, 
-      {
-        type: "group",
-        layout: "grid",
-        grid: { cols: 1 },
-        colSpan: 2,
-        items: [
-          {
-            field: "Remark",
-            label: "Remark:",
           },
           {
-            field: "Remark1",
-            label: "下拉多选:",
-            placeholder: "Select products...",
-            dataTextField: "ProductName",
-            dataValueField: "ProductID",
-            autoBind: false,
-            dataSource: {
-                type: "odata",
-                serverFiltering: true,
-                transport: {
-                    read: {
-                        url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
-                    }
-                }
-            },
-            value: [
-                { ProductName: "Chang", ProductID: 2 },
-                { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
-            ]
+            field: "remark",
+            label: "Remark:",
+            colSpan: 2,
+          },
+          {
+            field: "action_flag",
+            label: "发货方:",
+            colSpan: 1
+          },
+          {
+            field: "management_type",
+            label: "承运方:",
+            colSpan: 1
+          },
+          {
+            field: "regist_date",
+            label: "创建时间:",
+            colSpan: 1,
+            editor: 'DatePicker',
+            editorOptions: {
+              format: "yyyy-MM-dd hh:mm:ss"
+            }
+          },
+          {
+            field: "regist_pname",
+            label: "创建人:",
+            colSpan: 1
+          },
+          {
+            field: "last_update_date",
+            label: "更新时间:",
+            colSpan: 1,
+            editor: 'DatePicker',
+            editorOptions: {
+              format: "yyyy-MM-dd hh:mm:ss"
+            }
+          },
+          {
+            field: "last_update_pname",
+            label: "更新人:",
+            colSpan: 1
           }
         ]
-      }
+      },
     ],
     validateField: function (e) {
       validationSuccess.html("");
@@ -231,12 +166,103 @@
     // }
   });
 
+  var xx = $('.k-form-field-wrap[data-container-for="remark"]').html()
+  xx = xx.replace('input', 'textarea')
+  var val = $('#remark').val()
+  $('.k-form-field-wrap[data-container-for="remark"]').html(xx)
+  $('#remark').val(val)
+  if(!(formData.status === '新建' || formData.status === '收货中')) {
+    $('#remark').attr('readonly', true)
+  }
+
   // 明细
   var dataSource = new kendo.data.DataSource({
     data: [
-      {EmployeeID: 1, status: '新建'},
-      {EmployeeID: 2, status: '新建'},
-      {EmployeeID: 3, status: '新建'}
+      {
+        id: 1, 
+        status: '已完成', 
+        code: 'P10100001',
+        name: '零部件3PN-1+A+A',
+        authentication_status: '试作',
+        quality_flag: '合格',
+        plan_pack_qty: 50,
+        plan_qty: 0,
+        plan_total_qty: 2500,
+        unit: '个',
+        min_sale_number: 10,
+        standard_package_number: 50,
+        is_process: '否',
+        actual_pack_qty: 50,
+        acutal_qty: 0,
+        actual_total_qty: 2500,
+        vender: 'CCBC',
+        manufacturer: 'SBK',
+        manufacturer_factory: 'SBKC',
+        production_lot: '20200811',
+        inbound_date: '2020-08-11',
+        inbound_lot: '20200811',
+        procution_date: '2020-08-01',
+        is_print_label: true,
+        label_qty: 50,
+        stock_bak: '',
+        bill_bak: ''
+      },{
+        id: 2, 
+        status: '货位分配中', 
+        code: 'P10100002',
+        name: '零部件3防污帽φ14.5',
+        authentication_status: '量产',
+        quality_flag: '不合格',
+        plan_pack_qty: 200,
+        plan_qty: 0,
+        plan_total_qty: 2000,
+        unit: '片',
+        min_sale_number: 20,
+        standard_package_number: 10,
+        is_process: '是',
+        actual_pack_qty: 200,
+        acutal_qty: 0,
+        actual_total_qty: 2000,
+        vender: '日铁上海',
+        manufacturer: 'NSSOL',
+        manufacturer_factory: 'NSSOL-SH',
+        production_lot: 'NS20080802',
+        inbound_date: '2020-08-11',
+        inbound_lot: '20200811',
+        procution_date: '2020-08-08',
+        is_print_label: true,
+        label_qty: 200,
+        stock_bak: '',
+        bill_bak: ''
+      },{
+        id: 3, 
+        status: '待入库', 
+        code: 'P20100013',
+        name: '不锈钢2PM-10',
+        authentication_status: '量产',
+        quality_flag: '待检',
+        plan_pack_qty: 0,
+        plan_qty: 50,
+        plan_total_qty: 50,
+        unit: '升',
+        min_sale_number: 50,
+        standard_package_number: 0,
+        is_process: '否',
+        actual_pack_qty: 0,
+        acutal_qty: 0,
+        actual_total_qty: 0,
+        vender: '上海华阳',
+        manufacturer: 'HY',
+        manufacturer_factory: 'HYTJ',
+        production_lot: '1D201350B123',
+        inbound_date: '2020-08-11',
+        inbound_lot: '20200811',
+        procution_date: '2020-08-02',
+        is_print_label: false,
+        label_qty: 0,
+        stock_bak: '',
+        bill_bak: ''
+      },
     ],
     pageSize: 5,
     // serverPaging: true,
@@ -252,6 +278,7 @@
       // pageSize:5,
       refresh: true
     },
+    editable: true,
     columns: [
       {
         width: 150, command: [
@@ -261,7 +288,7 @@
               e.preventDefault();
               var tr = $(e.target).closest("tr");
               var data = this.dataItem(tr);
-              parentId = data.EmployeeID;
+              parentId = data.id;
               if (!info_data[parentId]) {
                 info_data[parentId] = []
               }
@@ -272,6 +299,7 @@
               //选择货位弹出框
               myWindow.kendoWindow({
                 width: "800px",
+                height: "400px",
                 title: "Rams's Ten Principles of Good Design",
                 content: "./window.html",
                 modal: {
@@ -285,220 +313,166 @@
       },
       {
         field: "status",
+        title: "状态",
         width: 150,
-        title: "状态" 
+        editable: function(){return false}
       },
       {
         field: "code",
+        title: "物料代码",
         width: 150,
-        title: "物料代码"
+        editable: function(){return false}
       },
       {
         field: "name",
+        title: "物料名称",
         width: 150,
-        title: "物料名称"
+        editable: function(){return false}
       },
       {
         field: "authentication_status",
+        title: "认证状态",
         width: 150,
-        title: "认证状态"
+        editable: function(){return false}
       },
       {
         field: "quality_flag",
+        title: "品质",
         width: 150,
-        title: "品质"
+        editable: function(){return false}
       },
       {
         field: "plan_pack_qty",
+        title: "收货预定包装数",
         width: 150,
-        title: "收货预定包装数"
+        editable: function () {
+          return formData.status === "新建";
+        }
       },
       {
         field: "plan_qty",
+        title: "收货预定个数",
         width: 150,
-        title: "收货预定个数"
+        editable: function () {
+          return formData.status === "新建";
+        }
       },
       {
         field: "plan_total_qty",
-        width: 150,
-        title: "收货预定总数"
+        title: "收货预定总数",
+        width: 150
       },
       {
         field: "unit",
-        width: 150,
-        title: "基本单位"
+        title: "基本单位",
+        width: 150
       },
       {
         field: "min_sale_number",
-        width: 150,
-        title: "最小销售数"
+        title: "最小销售数",
+        width: 150
       },
       {
         field: "standard_package_number",
-        width: 150,
-        title: "标准包装数"
+        title: "标准包装数",
+        width: 150
       },
       {
         field: "is_process",
-        width: 150,
-        title: "是否加工"
+        title: "是否加工",
+        width: 150
       },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // },
-      // {
-      //   field: "min_sale_number",
-      //   title: "最小销售数"
-      // }
+      {
+        field: "actual_pack_qty",
+        title: "收货包装数",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "acutal_qty",
+        title: "收货个数",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "actual_total_qty",
+        title: "收货总数",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "vender",
+        title: "供应商",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "manufacturer",
+        title: "制造商",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "manufacturer_factory",
+        title: "制造商工厂",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "production_lot",
+        title: "生产批次号",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "inbound_date",
+        title: "入库日期",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "inbound_lot",
+        title: "入库批次",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "procution_date",
+        title: "生产日期",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "is_print_label",
+        title: "标签打印",
+        width: 150,
+        template: `
+          <input type="checkbox" checked="#: is_print_label #"/>
+        `,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "label_qty",
+        title: "标签数量",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "stock_bak",
+        title: "库存属性",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      },
+      {
+        field: "bill_bak",
+        title: "单据明细属性",
+        width: 150,
+        editable: function(dataItem){return dataItem.status === '收货中'}
+      }
     ],
     detailTemplate: '<div id="split-grid"></div>',
     detailExpand: function (e) {
-      var id = this.dataItem(e.masterRow).EmployeeID
+      var id = this.dataItem(e.masterRow).id
       e.detailRow.find("#split-grid").data("kendoGrid").dataSource.read({
         data: info_data[id]
       })
@@ -506,8 +480,45 @@
       e.masterRow.attr("data-id", id);
     },
     detailInit: function (e) {
-      var id = this.dataItem(e.detailRow.prev("tr")).EmployeeID;
-      info_data[id] = [{ OrderID: 10258, location_area_id: "Kirchgasse 6" }];
+      var id = this.dataItem(e.detailRow.prev("tr")).id;
+      // info_data[id] = [ { OrderID: 10258, location_area_id: "Kirchgasse 6" } ]
+      info_data[1] = [
+        {
+          location_area_id: 'AF',
+          location_id: 'AF1-1',
+          inbound_pack_qty: 20,
+          inbound_qty: 0,
+          inbound_total_qty: 1000
+        },{
+          location_area_id: 'AF',
+          location_id: 'AF1-2',
+          inbound_pack_qty: 20,
+          inbound_qty: 0,
+          inbound_total_qty: 1000
+        },{
+          location_area_id: 'AF',
+          location_id: 'AF1-3',
+          inbound_pack_qty: 10,
+          inbound_qty: 0,
+          inbound_total_qty: 500
+        }
+      ];
+      info_data[2] = [
+        {
+          location_area_id: 'BH',
+          location_id: 'BH1-i',
+          inbound_pack_qty: 180,
+          inbound_qty: 0,
+          inbound_total_qty: 1800
+        },{
+          location_area_id: 'BH',
+          location_id: 'BH1-j',
+          inbound_pack_qty: 20,
+          inbound_qty: 0,
+          inbound_total_qty: 200
+        }
+      ];
+      info_data[3] = []
       ids[id] = [10258];
       e.detailRow.find("#split-grid").kendoGrid({
         dataSource: {
@@ -521,45 +532,37 @@
             }
           },
           // autoSync: true,
-          schema: {
-            model: {
-              fields: {
-                ShipCountry: { editable: false },
-                OrderID: { editable: false },
-              }
-            }
-          }
         },
         // toolbar:[
         //     { name:'save' }
         // ],
+        width: 1000,
         editable: true,
         columns: [
-          { width: 150, command: 'destroy' },
+          {  command: 'destroy' },
           {
-            field: "location_area_id", title: "货区", width: 200,
+            field: "location_area_id", title: "货区", 
             attributes: { class: 'cargopositionNo' },
             editable: function () { return true }
           },
           {
-            field: "location_id", title: "货位", width: 200,
+            field: "location_id", title: "货位", 
             attributes: { class: 'cargopositionNo' },
             editable: function () { return true }
           },
           {
-            field: "inbound_pack_qty", title: $t('plan','inbound_pack_qty'), width: 200,
+            field: "inbound_pack_qty", title: $t('plan','inbound_pack_qty'), 
             attributes: { class: 'toolNumber' },
             editable: function () { return true }
           },
           {
-            field: "inbound_qty", title: "入库个数", width: 200,
+            field: "inbound_qty", title: "入库个数", 
             editable: function () { return true }
           },
           {
-            field: "inbound_total_qty", title: "入库总数", width: 200,
+            field: "inbound_total_qty", title: "入库总数", 
             editable: function () { return true }
-          },
-          { field: 'OrderID', title: '&nbsp;', editable: function () { return false } }
+          }
         ],
 
         pageable: false
@@ -610,6 +613,12 @@
         console.log(exampleform.data("kendoForm")._model)
         console.log($('#info-grid').data('kendoGrid')._data,'info')
         console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
+        let formData = {
+          ...exampleform.data("kendoForm")._model, 
+          remark: $('#remark').val()
+        }
+        console.log(formData, 'formData')
+
         var trs = $('#info-grid').data('kendoGrid').items()
         trs.each(function(idx){
           if($(this).attr("data-id")){

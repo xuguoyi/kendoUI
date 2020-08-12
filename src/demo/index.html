@@ -9,10 +9,10 @@
 <body>
   <header class="menu">
     <ul id="horizontalMenu">
-        <li>
-          <div class="logo">原材料控制系统</div>
-        </li>
-      <li style="margin-left: calc(100% - 1000px)">
+      <li>
+        <div class="logo">原材料控制系统</div>
+      </li>
+      <li style="margin-left: calc(100% - 1100px)">
         Demo
         <ul>
           <li url="./form.html">表单</li>
@@ -70,9 +70,10 @@
     </ul>
   </header>
   <div id="tabstrip"></div>
+  <footer class="k-link">footer</footer>
   <div class="oper-tab">
     <i class="fa fa-bars"></i>
-    <div class="oper-btn">
+    <div class="oper-tab-btn">
       <div class="close-other">关闭其它</div>
       <div class="close-all">关闭所有</div>
     </div>
@@ -97,8 +98,12 @@
       function openThemeDialog() {
         themeWindow.kendoWindow({
           width: "615px",
+          height: "350px",
           title: "Change Theme",
-          content: "./theme.html"
+          content: "./theme.html",
+          modal: {
+            preventScroll: true
+          }
         });
         themeWindow.data("kendoWindow").center().open();
       }
