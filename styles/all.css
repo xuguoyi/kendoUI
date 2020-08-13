@@ -73,8 +73,8 @@ html, body {
   max-width: none;
 }
 .k-form-horizontal .k-form-field>.k-form-label, .k-form-horizontal .k-form-field>.k-label{
-  width: 165px;
-  justify-content: end;
+  width: 165px!important;
+  justify-content: end!important;
 }
 .k-form-legend {
   margin: 0;
@@ -178,10 +178,6 @@ th.required:after {
   margin-top: 10px;
 }
 
-/* footer */
-/* body>footer {
-  display: none;
-} */
 footer {
   display: block;
   width: 100%;
@@ -194,4 +190,8 @@ footer {
 .k-link .k-sprite {
   font-size: 16px;
   line-height: 16px;
+}
+
+textarea[type="text"] {
+  height: 60px;
 }
