@@ -1,22 +1,36 @@
-<a id="link" href="#">Click me</a>
+<!DOCTYPE html>
+<html id="html">
 
-<script>
-var router = new kendo.Router();
+<head>
+  <title>menu</title>
+  <meta charset="utf-8">
+  <link href="../../styles/all.css" rel="stylesheet">
+</head>
 
-router.route("/items/:category/:id", function(category, id, params) {
-  console.log(category, "item with", id, " was requested by", params.user);
-});
+<body>
+  <!-- <header class="menu">
+    <ul id="horizontalMenu"></ul>
+  </header> -->
+  <div id="tabstrip"></div>
+  <!-- <footer class="k-link"></footer>
+  <div id="changeThemeWindow"></div> -->
 
-router.bind("change", function(e) {
-  console.log("change event", e);
-});
+  <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
+  <script type="text/x-kendo-template" id="allTheme">
 
-$(function() {
-  router.start();
-  $("#link").click(function() {
-    router.navigate("/items/books/59?user=John");
-    return false;
-  });
+  </script>
+  <script>
+    function requireReady() {
+      $("#tabstrip").kendoTabStrip({
+        dataTextField: "Name",
+        dataUrlField: "Url",
+        dataSource: [
+          { Name: "Telerik", Url: "https://www.baidu.com" },
+          { Name: "Google", Url: "https://www.google.com" }
+        ]
+    });
+    }
+  </script>
+</body>
 
-});
-</script>
+</html>

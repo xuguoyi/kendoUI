@@ -42,7 +42,18 @@
   });
 
   // panelbar
-  $("#panelbar").kendoPanelBar();
+  $("#panelbar").kendoPanelBar({
+    animation: {
+      collapse: {
+        duration: 200,
+        effects: "fadeOut"
+      },
+      expand: {
+        duration: 00,
+        effects: "expandVertical fadeIn"
+      }
+    }
+  });
   var panelBar = $("#panelbar").data("kendoPanelBar")
   panelBar.expand($('[id^="item"]'))
 
@@ -75,7 +86,11 @@
           {
             field: "order_no",
             label: "入库计划号:",
-            colSpan: 1
+            colSpan: 1,
+            editor: 'AutoComplete',
+            editorOptions: {
+              enable: false
+            }
           },
           {
             field: "status",
@@ -281,10 +296,14 @@
     editable: true,
     columns: [
       {
-        width: 150,
+        width: 100,
+        title: "选择货位",
+        headerAttributes: { style: "text-align: center;" },
+        attributes: { style: "text-align: center" },
         command: [
           {
-            name: '选择货位',
+            name: ' ',
+            iconClass: "fa fa-hand-o-up",
             click: function (e) {
               e.preventDefault();
               var tr = $(e.target).closest("tr");
@@ -538,7 +557,11 @@
         width: 1000,
         editable: true,
         columns: [
-          { command: 'destroy' },
+          {
+            width: 60, title: '删除', command: [{ name: "destroy", text: "" }],
+            headerAttributes: { style: "text-align: center;" },
+            attributes: { style: "text-align: center" }
+          },
           {
             field: "location_area_id", title: "货区",
             attributes: { class: 'cargopositionNo' },
@@ -644,6 +667,18 @@
 
   $(".fa-refresh").click(function () {
     $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
+  })
+
+  var trExpand = true
+  // 一键折叠
+  $('.k-hierarchy-cell.k-header').click(function () {
+    if (trExpand) {
+      $("#info-grid").data("kendoGrid").collapseRow($("#info-grid tr.k-master-row"));
+      trExpand = false
+    } else {
+      $("#info-grid").data("kendoGrid").expandRow($("#info-grid tr.k-master-row"));
+      trExpand = true
+    }
   })
 
 </script>

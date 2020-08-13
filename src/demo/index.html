@@ -66,11 +66,15 @@
               { text: "表单", attr: { url: './form.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
               { text: "Frozen and Editable", attr: { url: './frozen.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
               { text: "入库计划明细", attr: { url: './plan.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
-              { text: "grid联动", attr: { url: './gridLink.html' }, select: function (e) { addTab(e.target.context.innerHTML) } }
+              { text: "grid联动", attr: { url: './gridLink.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
+              { text: "货位图", attr: { url: './tilelayout.html' }, select: function (e) { addTab(e.target.context.innerHTML) } }
             ]
           },
           {
             text: "", spriteCssClass: 'fa fa-user-circle', items: [
+              { text: "张三"},
+              { text: "仓库"},
+              { text: "货主"},
               { text: "仓库货主切换"},
               { text: "密码修改" }
             ]
@@ -81,8 +85,8 @@
           {
             text: "", spriteCssClass: 'fa fa-globe', items: [
               { text: "中文", attr: { lang: "zh-CN" }, select: function (e) { changeLang(e.target.context.innerHTML) } },
-              { text: "英文", attr: { lang: 'en-CA' }, select: function (e) { changeLang(e.target.context.innerHTML) } },
-              { text: "日文", attr: { lang: 'ja-JP' }, select: function (e) { changeLang(e.target.context.innerHTML) } }
+              { text: "English", attr: { lang: 'en-CA' }, select: function (e) { changeLang(e.target.context.innerHTML) } },
+              { text: "日本語", attr: { lang: 'ja-JP' }, select: function (e) { changeLang(e.target.context.innerHTML) } }
             ]
           },
           {

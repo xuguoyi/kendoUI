@@ -33,19 +33,19 @@
   var validationSuccess = $("#validation-success");
   // 状态
   $("#stepper").kendoStepper({
-      steps: [{
-          label: "新建",
-          icon: "home"
-      },{
-          label: "收货中",
-          icon: "gear"
-      },{
-          label: "货位分配中",
-          icon: "attachment"
-      },{
-          label: "收货完成",
-          icon: "save"
-      }]
+    steps: [{
+      label: "新建",
+      icon: "home"
+    }, {
+      label: "收货中",
+      icon: "gear"
+    }, {
+      label: "货位分配中",
+      icon: "attachment"
+    }, {
+      label: "收货完成",
+      icon: "save"
+    }]
   });
 
   // panelbar
@@ -112,11 +112,11 @@
               dataTextField: "CategoryName",
               dataValueField: "CategoryID",
               dataSource: {
-                  type: "odata",
-                  serverFiltering: true,
-                  transport: {
-                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
-                  }
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                  read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                }
               }
             }
           },
@@ -131,11 +131,11 @@
               dataTextField: "Order.ShipCity",
               dataValueField: "OrderID",
               dataSource: {
-                  type: "odata",
-                  serverFiltering: true,
-                  transport: {
-                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
-                  }
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                  read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
+                }
               }
             }
           }
@@ -185,16 +185,16 @@
               dataTextField: "ProductName",
               dataValueField: "ProductID",
               dataSource: {
-                  type: "odata",
-                  serverFiltering: true,
-                  transport: {
-                      read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
-                  }
+                type: "odata",
+                serverFiltering: true,
+                transport: {
+                  read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                }
               }
             }
           }
         ]
-      }, 
+      },
       {
         type: "group",
         layout: "grid",
@@ -221,17 +221,17 @@
             dataValueField: "ProductID",
             autoBind: false,
             dataSource: {
-                type: "odata",
-                serverFiltering: true,
-                transport: {
-                    read: {
-                        url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
-                    }
+              type: "odata",
+              serverFiltering: true,
+              transport: {
+                read: {
+                  url: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products",
                 }
+              }
             },
             value: [
-                { ProductName: "Chang", ProductID: 2 },
-                { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
+              { ProductName: "Chang", ProductID: 2 },
+              { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
             ]
           }
         ]
@@ -276,9 +276,10 @@
     // height: 350,
     toolbar: ["create"],
     columns: [
-      { field: "ProductName", 
-        title: "Product Name", 
-        headerAttributes: {"class": "required"}
+      {
+        field: "ProductName",
+        title: "Product Name",
+        headerAttributes: { "class": "required" }
       },
       { field: "Category", title: "Category", width: "180px", editor: categoryDropDownEditor, template: "#=Category.CategoryName#" },
       { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
@@ -466,17 +467,17 @@
   $('.fa-save').on('click', function () {
     var validatable = $("#panelbar").kendoValidator().data("kendoValidator");
     if (validatable.validate() === false) {
-        var errors = validatable.errors();
-        $(errors).each(function() {
-          $("#errors").html(this);
-        });
-      }else {
-        console.log(exampleform.data("kendoForm")._model)
-        console.log(grid.data("kendoGrid")._data)
-        console.log($('#info-grid').data('kendoGrid')._data,'info')
-        console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
-        validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
-      }
+      var errors = validatable.errors();
+      $(errors).each(function () {
+        $("#errors").html(this);
+      });
+    } else {
+      console.log(exampleform.data("kendoForm")._model)
+      console.log(grid.data("kendoGrid")._data)
+      console.log($('#info-grid').data('kendoGrid')._data, 'info')
+      console.log($('#info-grid').data('kendoGrid').items(), 'split-grid')
+      validationSuccess.html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+    }
   })
 
   $('.fa-close').on('click', function () {
@@ -488,7 +489,7 @@
   // 必填
   $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
 
-  $(".fa-bath").click(function() {
+  $(".fa-bath").click(function () {
     $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
   })
 

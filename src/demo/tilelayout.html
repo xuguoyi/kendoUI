@@ -1,0 +1,96 @@
+<div id="tilelayout"></div>
+<script>
+  var data1 = [
+    { cargo: 'A17222', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A18', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'A19', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A20', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'A21', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A22', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A23', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'A24', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'A25', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A26', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
+  ];
+  var data2 = [
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B18', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'B19', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B20', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'B21', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B22', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B23', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'B24', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'B25', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B26', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
+  ]
+
+  var arr = []
+  var str = '';
+  if (!data || !data.length) {
+    $("#tilelayout").html("");
+    return;
+  }
+  $("#tilelayout").html("");
+  for (var i = 0; i < data.length; i++) {
+    str += '<li>' +
+      '<div class="k-block ' + data[i].ff + '" data-cargo="' + data[i].cargo + '">' +
+      '<div class="k-header ' + data[i].ff + '">'
+      + data[i].cargo +
+      '<span style="float:right;margin-right:5px;">' +
+      '<i style="background: blue"></i>' +
+      '<i ></i>' +
+      '<i style="background: yellow"></i>' +
+      '<i></i>' +
+      '<i style="background:green;"></i>' +
+      '</span>' +
+      '</div>' +
+      '<div class="content">' +
+      ' 物料：' + data[i].materil + ' <br>' +
+      '供应商：' + data[i].cc + ' <br>' +
+      '工装数：' + data[i].dd + ' <br>' +
+      '占用率：' + data[i].ee + ' <br>' +
+      '总重：' + data[i].weight +
+      '</div>' +
+      '</div>' +
+      '</li>'
+  }
+  $("#tilelayout").append(str);
+  $("#tilelayout").kendoTileLayout({
+    containers: [
+      {
+        colSpan: 1,
+        rowSpan: 1,
+        header: {
+          text: "Item one"
+        },
+        bodyTemplate: kendo.template($("#first").html())
+      },
+      {
+        colSpan: 1,
+        rowSpan: 1,
+        header: {
+          text: "Item two"
+        },
+        bodyTemplate: kendo.template($("#second").html())
+      }
+    ],
+    columns: 4
+  });
+</script>

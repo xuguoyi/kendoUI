@@ -195,3 +195,7 @@ footer {
 textarea[type="text"] {
   height: 60px;
 }
+
+.k-grid tbody .k-button {
+  min-width: 25px;
+}
