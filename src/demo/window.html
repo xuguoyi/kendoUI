@@ -1,17 +1,15 @@
 <div class="pos">
 </div>
-<div class="window-operBtn">
-  <button class="determine_window">确定</button>
-  <button class="cancel_window">取消</button>
-</div>
-
+<script id="template" type="text/x-kendo-template">
+  <a class="k-button" href="\#" onclick="return determine_window()">确定</a>
+  <a class="k-button" href="\#" onclick="return cancel_window()">取消</a>
+</script>
 <script type="text/javascript">
   $(".pos").kendoGrid({
+    toolbar: [
+      { template: kendo.template($("#template").html()) }
+    ],
     dataSource: {
-      // type: "odata",
-      // transport: {
-      //   read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
-      // },
       data: [
         {
           code: 'P10100001',
@@ -26,7 +24,7 @@
           available_total_qty: 2000
         },
         {
-          code: 'P10100001',
+          code: 'P10100002',
           name: '零部件3防污帽φ14.5',
           barCode: '2',
           quality_flag: '不合格',
@@ -101,7 +99,7 @@
       });
   }
 
-  $('.determine_window').on('click', function() {
+  function determine_window(){
     $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
     var sel_data = $(".pos").data("sel_data");
     $.each(sel_data, function (i, item) {
@@ -113,23 +111,23 @@
     });
     clearInfo()
     $("#dialog").data("kendoWindow").close();
-  })
+  }
 
-  $('.cancel_window').on('click', function() {
+  function cancel_window(){
     clearInfo()
     $("#dialog").data("kendoWindow").close();
-  })
+  }
 
   function clearInfo() {
     $(".pos").data("kendoGrid").clearSelection();
     // 关闭已打开的子表格 
-    var openDetails = $("#info-grid .k-master-row td a.k-i-collapse");
-    openDetails.each(function () {
-      $(this).click();
-    })
+    // var openDetails = $("#info-grid .k-master-row td a.k-i-collapse");
+    // openDetails.each(function () {
+    //   $(this).click();
+    // })
+    $("#info-grid").data("kendoGrid").collapseRow($("#info-grid").find("tr.k-master-row")[index]);
     // 打开对应的子表格
     $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
   }
 
-  $('.determine_window, .cancel_window').kendoButton()
 </script>

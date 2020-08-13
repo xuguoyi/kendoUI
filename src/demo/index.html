@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html id="html">
+
 <head>
   <title>menu</title>
   <meta charset="utf-8">
@@ -8,98 +9,108 @@
 
 <body>
   <header class="menu">
-    <ul id="horizontalMenu">
-      <li>
-        <div class="logo">原材料控制系统</div>
-      </li>
-      <li style="margin-left: calc(100% - 1100px)">
-        Demo
-        <ul>
-          <li url="./form.html">表单</li>
-          <li url="./frozen.html">Frozen and Editable</li>
-          <li url="./plan.html">入库计划</li>
-          <li url="./gridLink.html">grid联动</li>
-          <li>Belts</li>
-          <li>Socks</li>
-          <li>Fan Zone</li>
-        </ul>
-      </li>
-      <li>
-        Ladies
-        <ul>
-          <li>Jackets and Coats</li>
-          <li>Jeans</li>
-          <li>Knitwear</li>
-          <li>Shirts</li>
-          <li>Belts</li>
-          <li>Socks</li>
-          <li>Fan Zone</li>
-        </ul>
-      </li>
-      <li>
-        Kids
-        <ul>
-          <li>Jackets and Coats</li>
-          <li>Jeans</li>
-          <li>Knitwear</li>
-          <li>Shirts</li>
-          <li>Belts</li>
-          <li>Socks</li>
-          <li>Fan Zone</li>
-        </ul>
-      </li>
-      <li>Sports</li>
-      <li>Brands</li>
-      <li url="./accessories.html">Accessories</li>
-      <li url="./promotions.html">Promotions</li>
-      <li><i class="fa fa-user-circle"></i>
-        <ul>
-          <li>厂区</li>
-          <li>修改密码</li>
-        </ul>
-      </li>
-      <li><i class="fa fa-info"></i></li>
-      <li><i class="fa fa-globe"></i>
-        <ul class="lang-change">
-          <li lang="zh-CN">中文</li>
-          <li lang="en-CA">英文</li>
-          <li lang="ja-JP">日文</li>
-        </ul>
-      </li>
-      <li><i class="fa fa-repeat"></i></li>
-    </ul>
+    <ul id="horizontalMenu"></ul>
   </header>
   <div id="tabstrip"></div>
-  <footer class="k-link">footer</footer>
-  <div class="oper-tab">
-    <i class="fa fa-bars"></i>
-    <div class="oper-tab-btn">
-      <div class="close-other">关闭其它</div>
-      <div class="close-all">关闭所有</div>
-    </div>
-  </div>
+  <footer class="k-link"></footer>
   <div id="changeThemeWindow"></div>
 
   <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
   <script type="text/x-kendo-template" id="allTheme">
-    
+
   </script>
   <script>
     function requireReady() {
+      var title = kendo.template('<div class="logo">仓储管理系统（WMS）</div>')
+      var footer = kendo.template('footer')
+      $(".menu").prepend(title)
+      $("footer").html(footer)
       var themeWindow = $("#changeThemeWindow")
+      var inlineDefault = new kendo.data.HierarchicalDataSource({
+        data: [
+          {
+              text: '入库', items: [
+              { text: "入库订单", attr: { url: './form.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
+              { text: "入库计划", attr: { url: './frozen.html' }, select: function (e) { addTab(e.target.context.innerHTML) } }
+            ]
+          },
+          {
+            text: "出库", items: [
+              { text: "出库订单" },
+              { text: "出库计划"},
+              { text: "出库任务"}
+            ]
+          },
+          {
+            text: "库内作业", items: [
+              { text: "检验任务"},
+              { text: "库存属性变更单" },
+              { text: "移动预订单" },
+              { text: "移动任务" },
+              { text: "盘点单" },
+              { text: "调整单" }
+            ]
+          },
+          {
+            text: "库存查询", items: [
+              { text: "库存查询"},
+              { text: "库存履历" },
+              { text: "库存快照" }
+            ]
+          },
+          {
+            text: "主数据管理"
+          },
+          {
+            text: "Demo", items: [
+              { text: "表单", attr: { url: './form.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
+              { text: "Frozen and Editable", attr: { url: './frozen.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
+              { text: "入库计划明细", attr: { url: './plan.html' }, select: function (e) { addTab(e.target.context.innerHTML) } },
+              { text: "grid联动", attr: { url: './gridLink.html' }, select: function (e) { addTab(e.target.context.innerHTML) } }
+            ]
+          },
+          {
+            text: "", spriteCssClass: 'fa fa-user-circle', items: [
+              { text: "仓库货主切换"},
+              { text: "密码修改" }
+            ]
+          },
+          {
+            text: "", spriteCssClass: 'fa fa-info', select: function (e) { openThemeDialog() }
+          },
+          {
+            text: "", spriteCssClass: 'fa fa-globe', items: [
+              { text: "中文", attr: { lang: "zh-CN" }, select: function (e) { changeLang(e.target.context.innerHTML) } },
+              { text: "英文", attr: { lang: 'en-CA' }, select: function (e) { changeLang(e.target.context.innerHTML) } },
+              { text: "日文", attr: { lang: 'ja-JP' }, select: function (e) { changeLang(e.target.context.innerHTML) } }
+            ]
+          },
+          {
+            text: "", spriteCssClass: 'fa fa-bars', items: [
+              { text: "关闭其它", select: function (e) { closeOther() } },
+              { text: "关闭所有", select: function (e) { closeAll() } }
+            ]
+          }
+        ],
+      
+})
       $("#horizontalMenu").kendoMenu({
+        dataSource: inlineDefault,
         scrollable: true
       });
 
       // changeTheme
-      $('.fa-info').closest('li').click(function() {
-        openThemeDialog()
-      })
       function openThemeDialog() {
         themeWindow.kendoWindow({
           width: "615px",
           height: "350px",
           title: "Change Theme",
+          actions: [
+            "Pin",
+            "Minimize",
+            "Maximize",
+            "Close"
+          ],
           content: "./theme.html",
           modal: {
             preventScroll: true
@@ -110,14 +121,12 @@
 
       // 初始化tab
       var tabstrip = $("#tabstrip").kendoTabStrip({
-        // animation: { open: { effects: "fadeIn" } },
         dataTextField: "text",
         dataContentUrlField: "ContentUrl",
         dataSource: [
           {
             text: "首页",
-            // ContentUrl: "./taillayout.html"
-            ContentUrl: './app.html'
+            ContentUrl: './app.html',
           }
         ]
       }).data('kendoTabStrip')
@@ -143,9 +152,9 @@
       configureCloseTab()
 
       // 添加tab
-      $("#horizontalMenu li").on("click", function () {
-        let text = $(this).text()
-        let url = $(this).attr('url')
+      function addTab(e) {
+        let text = e;
+        let url = $('.k-link.k-menu-link:contains(' + e + ')').closest('li').attr('url')
         if (url && !~$.inArray(url, tabstrip._contentUrls)) {
           tabstrip.append(
             [{
@@ -157,11 +166,12 @@
           tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
           tabstrip.activateTab(tabsElements)
           contAddHeight()
-        }else {
+        } else {
           let n = tabstrip._contentUrls.indexOf(url)
           tabstrip.select(n)
         }
-      })
+      }
+
       // 计算tab内高度
       function contAddHeight() {
         $('#tabstrip>.k-content').addClass("selected")
@@ -169,56 +179,56 @@
       contAddHeight()
 
       // localStorage获取theme
-      if(localStorage.getItem("theme")) {
+      if (localStorage.getItem("theme")) {
         initPageTheme(localStorage.getItem("theme"));
       }
 
-      function initPageTheme(themeUrl){
+      function initPageTheme(themeUrl) {
         let $theme = $('#page-theme');
-        if(!$theme.length){
-          $theme = $('<link rel="stylesheet" href="'+themeUrl+'" id="page-theme">').insertAfter($('head'));
-        }else{
+        if (!$theme.length) {
+          $theme = $('<link rel="stylesheet" href="' + themeUrl + '" id="page-theme">').insertAfter($('head'));
+        } else {
           $theme.attr('href', themeUrl);
         }
       }
 
       // 国际化
-      if(localStorage.getItem("language")) {
+      if (localStorage.getItem("language")) {
         let lang = localStorage.getItem("language");
-        require(['./i18n', '../../js/messages/kendo.messages.'+lang+'.min.js', '../../js/cultures/kendo.culture.'+lang+'.min.js'], function(i18n){
+        require(['./i18n', '../../js/messages/kendo.messages.' + lang + '.min.js', '../../js/cultures/kendo.culture.' + lang + '.min.js'], function (i18n) {
           i18n.load(lang);
         });
       }
 
-      $(".lang-change li").click(function() {
-        let lang = $(this).attr('lang')
-        if(lang && lang !== localStorage.getItem("language")) {
+      function changeLang(e) {
+        let lang = $('.k-link.k-menu-link:contains(' + e + ')').closest('li').attr('lang')
+        if (lang && lang !== localStorage.getItem("language")) {
           localStorage.setItem("language", lang)
           window.location.reload()
         }
-      })
+      }
 
       // 关闭其它
-      $('.close-other').click(function() {
+      function closeOther() {
         let n = $('#tabstrip li[role="tab"]').length
         let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
-        for(let i=1; i<idx-1; i++) {
+        for (let i = 1; i < idx - 1; i++) {
           tabstrip.remove(1)
         }
-        for(let i=2; i<n; i++) {
+        for (let i = 2; i < n; i++) {
           tabstrip.remove(2)
         }
         tabstrip.select(1)
-      })
+      }
 
       // 关闭所有
-      $('.close-all').click(function() {
+      function closeAll() {
         let n = $('#tabstrip li[role="tab"]').length
-        for(let i=1; i<n; i++) {
+        for (let i = 1; i < n; i++) {
           tabstrip.remove(1)
         }
         tabstrip.select(0)
-      })
+      }
 
     };
   </script>

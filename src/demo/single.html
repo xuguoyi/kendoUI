@@ -1,0 +1,22 @@
+<a id="link" href="#">Click me</a>
+
+<script>
+var router = new kendo.Router();
+
+router.route("/items/:category/:id", function(category, id, params) {
+  console.log(category, "item with", id, " was requested by", params.user);
+});
+
+router.bind("change", function(e) {
+  console.log("change event", e);
+});
+
+$(function() {
+  router.start();
+  $("#link").click(function() {
+    router.navigate("/items/books/59?user=John");
+    return false;
+  });
+
+});
+</script>

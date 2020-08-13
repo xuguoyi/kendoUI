@@ -16,29 +16,29 @@
   </ul>
   <div id="dialog"></div>
   <div class="oper-btn">
-    <button title="保存"><i class="fa fa-save"></i></button>
-    <button title="关闭"><i class="fa fa-close"></i></button>
-    <button title="提交"><i class="fa fa-check"></i></button>
-    <button title="刷新"><i class="fa fa-bath"></i></button>
+    <button title="保存"><i class="fa fa-save"></i>保存</button>
+    <button title="关闭"><i class="fa fa-close"></i>关闭</button>
+    <button title="提交"><i class="fa fa-check"></i>提交</button>
+    <button title="刷新"><i class="fa fa-refresh"></i>刷新</button>
   </div>
 </div>
 <script type="text/javascript">
   var validationSuccess = $("#validation-success");
   // 状态
   $("#stepper").kendoStepper({
-      steps: [{
-          label: "新建",
-          icon: "home"
-      },{
-          label: "收货中",
-          icon: "gear"
-      },{
-          label: "货位分配中",
-          icon: "attachment"
-      },{
-          label: "收货完成",
-          icon: "save"
-      }]
+    steps: [{
+      label: "新建",
+      icon: "home"
+    }, {
+      label: "收货中",
+      icon: "gear"
+    }, {
+      label: "货位分配中",
+      icon: "attachment"
+    }, {
+      label: "收货完成",
+      icon: "save"
+    }]
   });
 
   // panelbar
@@ -90,7 +90,7 @@
           {
             field: "inbound_type_id",
             label: "入库类型:",
-            validation: { required: true},
+            validation: { required: true },
             colSpan: 1
           },
           {
@@ -171,7 +171,7 @@
   var val = $('#remark').val()
   $('.k-form-field-wrap[data-container-for="remark"]').html(xx)
   $('#remark').val(val)
-  if(!(formData.status === '新建' || formData.status === '收货中')) {
+  if (!(formData.status === '新建' || formData.status === '收货中')) {
     $('#remark').attr('readonly', true)
   }
 
@@ -179,8 +179,8 @@
   var dataSource = new kendo.data.DataSource({
     data: [
       {
-        id: 1, 
-        status: '已完成', 
+        id: 1,
+        status: '已完成',
         code: 'P10100001',
         name: '零部件3PN-1+A+A',
         authentication_status: '试作',
@@ -206,9 +206,9 @@
         label_qty: 50,
         stock_bak: '',
         bill_bak: ''
-      },{
-        id: 2, 
-        status: '货位分配中', 
+      }, {
+        id: 2,
+        status: '货位分配中',
         code: 'P10100002',
         name: '零部件3防污帽φ14.5',
         authentication_status: '量产',
@@ -234,9 +234,9 @@
         label_qty: 200,
         stock_bak: '',
         bill_bak: ''
-      },{
-        id: 3, 
-        status: '待入库', 
+      }, {
+        id: 3,
+        status: '待入库',
         code: 'P20100013',
         name: '不锈钢2PM-10',
         authentication_status: '量产',
@@ -281,7 +281,8 @@
     editable: true,
     columns: [
       {
-        width: 150, command: [
+        width: 150,
+        command: [
           {
             name: '选择货位',
             click: function (e) {
@@ -309,37 +310,37 @@
               myWindow.data("kendoWindow").center().open();
             }
           }
-        ]
+        ],
       },
       {
         field: "status",
         title: "状态",
         width: 150,
-        editable: function(){return false}
+        editable: function () { return false }
       },
       {
         field: "code",
         title: "物料代码",
         width: 150,
-        editable: function(){return false}
+        editable: function () { return false }
       },
       {
         field: "name",
         title: "物料名称",
         width: 150,
-        editable: function(){return false}
+        editable: function () { return false }
       },
       {
         field: "authentication_status",
         title: "认证状态",
         width: 150,
-        editable: function(){return false}
+        editable: function () { return false }
       },
       {
         field: "quality_flag",
         title: "品质",
         width: 150,
-        editable: function(){return false}
+        editable: function () { return false }
       },
       {
         field: "plan_pack_qty",
@@ -386,92 +387,92 @@
         field: "actual_pack_qty",
         title: "收货包装数",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "acutal_qty",
         title: "收货个数",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "actual_total_qty",
         title: "收货总数",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "vender",
         title: "供应商",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "manufacturer",
         title: "制造商",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "manufacturer_factory",
         title: "制造商工厂",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "production_lot",
         title: "生产批次号",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "inbound_date",
         title: "入库日期",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "inbound_lot",
         title: "入库批次",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "procution_date",
         title: "生产日期",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "is_print_label",
         title: "标签打印",
         width: 150,
         template: '<input type="checkbox" checked="#: is_print_label #"/>',
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "label_qty",
         title: "标签数量",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "stock_bak",
         title: "库存属性",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       },
       {
         field: "bill_bak",
         title: "单据明细属性",
         width: 150,
-        editable: function(dataItem){return dataItem.status === '收货中'}
+        editable: function (dataItem) { return dataItem.status === '收货中' }
       }
     ],
-    detailTemplate: '<div id="split-grid"></div>',
+    detailTemplate: '<div class="split-grid"></div>',
     detailExpand: function (e) {
       var id = this.dataItem(e.masterRow).id
-      e.detailRow.find("#split-grid").data("kendoGrid").dataSource.read({
+      e.detailRow.find(".split-grid").data("kendoGrid").dataSource.read({
         data: info_data[id]
       })
       // 点击展开时，添加自定义属性
@@ -487,13 +488,13 @@
           inbound_pack_qty: 20,
           inbound_qty: 0,
           inbound_total_qty: 1000
-        },{
+        }, {
           location_area_id: 'AF',
           location_id: 'AF1-2',
           inbound_pack_qty: 20,
           inbound_qty: 0,
           inbound_total_qty: 1000
-        },{
+        }, {
           location_area_id: 'AF',
           location_id: 'AF1-3',
           inbound_pack_qty: 10,
@@ -508,7 +509,7 @@
           inbound_pack_qty: 180,
           inbound_qty: 0,
           inbound_total_qty: 1800
-        },{
+        }, {
           location_area_id: 'BH',
           location_id: 'BH1-j',
           inbound_pack_qty: 20,
@@ -517,8 +518,8 @@
         }
       ];
       info_data[3] = []
-      ids[id] = [10258];
-      e.detailRow.find("#split-grid").kendoGrid({
+      // ids[id] = [10258];
+      e.detailRow.find(".split-grid").kendoGrid({
         dataSource: {
           // data: info_data[id],
           // pageSize:10,
@@ -537,28 +538,28 @@
         width: 1000,
         editable: true,
         columns: [
-          {  command: 'destroy' },
+          { command: 'destroy' },
           {
-            field: "location_area_id", title: "货区", 
+            field: "location_area_id", title: "货区",
             attributes: { class: 'cargopositionNo' },
             editable: function () { return true }
           },
           {
-            field: "location_id", title: "货位", 
+            field: "location_id", title: "货位",
             attributes: { class: 'cargopositionNo' },
             editable: function () { return true }
           },
           {
-            field: "inbound_pack_qty", title: $t('plan','inbound_pack_qty'), 
+            field: "inbound_pack_qty", title: $t('plan', 'inbound_pack_qty'),
             attributes: { class: 'toolNumber' },
             editable: function () { return true }
           },
           {
-            field: "inbound_qty", title: "入库个数", 
+            field: "inbound_qty", title: "入库个数",
             editable: function () { return true }
           },
           {
-            field: "inbound_total_qty", title: "入库总数", 
+            field: "inbound_total_qty", title: "入库总数",
             editable: function () { return true }
           }
         ],
@@ -566,11 +567,11 @@
         pageable: false
       })
     },
-    dataBinding: function (e) {
-      if (e.action === "itemchange") {
-        e.preventDefault();
-      }
-    },
+    // dataBinding: function (e) {
+    //   if (e.action === "itemchange") {
+    //     e.preventDefault();
+    //   }
+    // },
     dataBound: function () {
       // 获取当前点击行的index值
       var commands = $("#info-grid .k-master-row .k-command-cell a");
@@ -583,61 +584,53 @@
           index = this.index;
         }
       }
+      this.expandRow(this.tbody.find("tr.k-master-row"))
     }
   })
 
   // operBtn
-  var tooltip = $(".oper-btn").kendoTooltip({
-    filter: "button",
-    position: "right",
-    animation: {
-      open: {
-        effects: "zoom",
-        duration: 150
-      }
-    }
-  }).data("kendoTooltip");
+  var tooltip = $(".oper-btn button").kendoButton().data("kendoButton");
 
   // 表单必填校验
   $('.fa-save').on('click', function () {
     var validatable = $("#panelbar").kendoValidator().data("kendoValidator");
     if (validatable.validate() === false) {
-        var errors = validatable.errors();
-        $(errors).each(function() {
-          $("#errors").html(this);
-        });
-      }else {
-        var mss = ''
-        console.log(exampleform.data("kendoForm")._model)
-        console.log($('#info-grid').data('kendoGrid')._data,'info')
-        console.log($('#info-grid').data('kendoGrid').items(),'split-grid')
-        var newFormData = JSON.parse(JSON.stringify(exampleform.data("kendoForm")._model))
-        newFormData.remark = $('#remark').val()
-        console.log(newFormData, 'formData')
+      var errors = validatable.errors();
+      $(errors).each(function () {
+        $("#errors").html(this);
+      });
+    } else {
+      var mss = ''
+      console.log(exampleform.data("kendoForm")._model)
+      console.log($('#info-grid').data('kendoGrid')._data, 'info')
+      console.log($('#info-grid').data('kendoGrid').items(), 'split-grid')
+      var newFormData = JSON.parse(JSON.stringify(exampleform.data("kendoForm")._model))
+      newFormData.remark = $('#remark').val()
+      console.log(newFormData, 'formData')
 
-        var trs = $('#info-grid').data('kendoGrid').items()
-        trs.each(function(idx){
-          if($(this).attr("data-id")){
-            var obj = new Object();
-            obj.warehousingPlansDetailId = $(this).attr("data-id");
-            obj.items = [];
-            var datailGrid = $(this).next("tr");
-            // 遍历子表格的每一行
-            $("tbody tr",datailGrid).each(function(i,j){
-                var item = new Object();
-                item.toolNumber = $(".toolNumber",this).text();
-                if(item.toolNumber != 1) { 
-                  $(".toolNumber",this).css('border', '1px solid #f00')
-                  var idn = idx+1
-                  var x = $t('plan', 'message', {m: idx+1, n:i, name: $t('plan', 'inbound_pack_qty')})
-                  mss += "<div class='k-messagebox k-messagebox-error'>"+x+"</div>"
-                  
-                }
-            })
-          }
-        })
-        validationSuccess.html(mss);
-      }
+      var trs = $('#info-grid').data('kendoGrid').items()
+      trs.each(function (idx) {
+        if ($(this).attr("data-id")) {
+          var obj = new Object();
+          obj.warehousingPlansDetailId = $(this).attr("data-id");
+          obj.items = [];
+          var datailGrid = $(this).next("tr");
+          // 遍历子表格的每一行
+          $("tbody tr", datailGrid).each(function (i, j) {
+            var item = new Object();
+            item.toolNumber = $(".toolNumber", this).text();
+            if (item.toolNumber != 1) {
+              $(".toolNumber", this).css('border', '1px solid #f00')
+              var idn = idx + 1
+              var x = $t('plan', 'message', { m: idx + 1, n: i, name: $t('plan', 'inbound_pack_qty') })
+              mss += "<div class='k-messagebox k-messagebox-error'>" + x + "</div>"
+
+            }
+          })
+        }
+      })
+      validationSuccess.html(mss);
+    }
   })
 
   $('.fa-close').on('click', function () {
@@ -649,7 +642,7 @@
   // 必填
   $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
 
-  $(".fa-bath").click(function() {
+  $(".fa-refresh").click(function () {
     $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
   })
 
