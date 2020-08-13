@@ -199,3 +199,8 @@ textarea[type="text"] {
 .k-grid tbody .k-button {
   min-width: 25px;
 }
+
+a.tab-link {
+  color: #337ab7;
+  cursor: pointer;
+}

@@ -1,12 +1,29 @@
-<div id="frozen-grid"></div>
+<div id="frozen">
+  <div id="frozen-grid"></div>
+</div>
 <script type="text/javascript">
   console.log(1)
   $("#frozen-grid").kendoGrid({
     dataSource: {
-      type: "odata",
-      transport: {
-        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
-      },
+      data: [{
+        OrderID: 10,
+        ShipCountry: '10',
+        ShipName: '10',
+        ShipCity: '10',
+        ShipAddress: '10'
+      },{
+        OrderID: 11,
+        ShipCountry: '11',
+        ShipName: '11',
+        ShipCity: '11',
+        ShipAddress: '11'
+      },{
+        OrderID: 13,
+        ShipCountry: '13',
+        ShipName: '13',
+        ShipCity: '13',
+        ShipAddress: '13'
+      }],
       schema: {
         model: {
           fields: {
@@ -28,10 +45,11 @@
     filterable: true,
     columnMenu: true,
     pageable: true,
-    editable: true,
+    // editable: true,
     columns: [{
       field: "OrderID",
       title: $t('frozen','orderId'),
+      template:' <a class="tab-link"> #: OrderID #</a> ',
       locked: true,
       lockable: false,
       width: 150
@@ -54,4 +72,18 @@
     }
     ]
   });
+
+  $('#frozen .tab-link').click(function() {
+    var tabStrip = $('#tabstrip').data('kendoTabStrip');
+    tabStrip.append(
+      [{
+        text: '入库明细单',
+        contentUrl: './plan.html?no='+$(this).text()
+      }]
+    );
+    $(tabStrip.contentElements.slice(-1)[0]).data('content', {txt: $(this).text()});
+    var tabsElements = $('#tabstrip li[role="tab"]:last-child');
+    tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
+    tabStrip.activateTab(tabsElements)
+  })
 </script>
