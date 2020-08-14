@@ -44,7 +44,7 @@ html, body {
   height: 54px;
 }
 #horizontalMenu li:nth-child(1) {
-  margin-left: calc(100% - 680px)
+  margin-left: calc(100% - 720px)
 } 
 .horizontal, 
 #horizontalMenu, 
