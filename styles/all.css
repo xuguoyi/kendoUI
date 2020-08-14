@@ -44,7 +44,7 @@ html, body {
   height: 54px;
 }
 #horizontalMenu li:nth-child(1) {
-  margin-left: calc(100% - 720px)
+  margin-left: calc(100% - 680px)
 } 
 .horizontal, 
 #horizontalMenu, 
@@ -203,4 +203,60 @@ textarea[type="text"] {
 a.tab-link {
   color: #337ab7;
   cursor: pointer;
+}
+
+/* 货位图 */
+#tilelayout ul {
+  list-style: none;
+}
+#tilelayout .choose-area {
+  display: flex;
+  justify-content: space-between;
+}
+#tilelayout .choose-area ul {
+  display: flex;
+  line-height: 30px;
+}
+#tilelayout .choose-area ul li{
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+#tilelayout .location-map .k-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+#tilelayout .location-map .k-card-header ul {
+  display: flex;
+  align-items: center;
+}
+#tilelayout .location-map .location-map-status,
+.all-status {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 2px;
+}
+#tilelayout .location-map .k-card-body {
+  padding: 0;
+}
+#tilelayout .location-map .k-card-body ul {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* 切换仓库用户 */
+#swichWarehouse .confirm-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+#swichWarehouse .k-content>div {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+#swichWarehouse .k-content>div h4 {
+  width: 80px;
 }

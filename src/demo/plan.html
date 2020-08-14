@@ -1,11 +1,11 @@
 <div class="all-form plan" id="plan">
   <h1 class="form-title">入库计划明细</h1>
-  <div id="validation-success"></div>
-  <nav id="stepper"></nav>
-  <ul id="panelbar">
+  <div class="validation-success"></div>
+  <nav class="stepper"></nav>
+  <ul class="panelbar">
     <li id="item1">基本信息
       <div>
-        <form id="exampleform"></form>
+        <form class="exampleform"></form>
       </div>
     </li>
     <li id="item3">计划明细
@@ -14,7 +14,7 @@
       </div>
     </li>
   </ul>
-  <div id="dialog"></div>
+  <div class="dialog"></div>
   <div class="oper-btn">
     <button title="保存"><i class="fa fa-save"></i>保存</button>
     <button title="关闭"><i class="fa fa-close"></i>关闭</button>
@@ -26,10 +26,9 @@
   var $el = $('#plan');
   $el.attr('id', '');
   var data = $el.closest('.k-content').data('content');
-  console.log(data);
-  var validationSuccess = $("#validation-success");
+  var validationSuccess = $(".validation-success", $el);
   // 状态
-  $("#stepper",$el).kendoStepper({
+  $(".stepper",$el).kendoStepper({
     steps: [{
       label: "新建",
       icon: "home"
@@ -46,7 +45,7 @@
   });
 
   // panelbar
-  $("#panelbar").kendoPanelBar({
+  $(".panelbar", $el).kendoPanelBar({
     animation: {
       collapse: {
         duration: 200,
@@ -58,7 +57,7 @@
       }
     }
   });
-  var panelBar = $("#panelbar").data("kendoPanelBar")
+  var panelBar = $(".panelbar", $el).data("kendoPanelBar")
   panelBar.expand($('[id^="item"]'))
 
   // form
@@ -77,7 +76,7 @@
     last_update_date: '2020-08-12 13:45:10',
     last_update_pname: '张三'
   }
-  var exampleform = $("#exampleform").kendoForm({
+  var exampleform = $(".exampleform", $el).kendoForm({
     orientation: "horizontal",
     formData: formData,
     // layout: "grid",
@@ -289,7 +288,7 @@
   });
   var ids = {};
   var info_data = {};
-  var myWindow = $("#dialog")
+  var myWindow = $(".dialog")
   $("#info-grid").kendoGrid({
     dataSource: dataSource,
     // pageable:false,
@@ -620,7 +619,7 @@
 
   // 表单必填校验
   $('.fa-save').on('click', function () {
-    var validatable = $("#panelbar").kendoValidator().data("kendoValidator");
+    var validatable = $(".panelbar", $el).kendoValidator().data("kendoValidator");
     if (validatable.validate() === false) {
       var errors = validatable.errors();
       $(errors).each(function () {
@@ -660,7 +659,7 @@
     }
   })
 
-  $('.fa-close').on('click', function () {
+  $('.fa-close', $el).on('click', function () {
     let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
     $("#tabstrip").data("kendoTabStrip").remove(idx - 1);
     $("#tabstrip").data("kendoTabStrip").select(0);
@@ -669,7 +668,7 @@
   // 必填
   $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
 
-  $(".fa-refresh").click(function () {
+  $(".fa-refresh", $el).click(function () {
     $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
   })
 

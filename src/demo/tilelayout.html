@@ -1,96 +1,121 @@
-<div id="tilelayout"></div>
+<div id="tilelayout">
+  <div class="choose-area">
+    <div>选择货位：<input class="choose-location" value="1"></div>
+    <div>
+      <ul>
+        <li><span class="all-status" style="background:palegoldenrod"></span>空货位</li>
+        <li><span class="all-status" style="background:palegreen"></span>未满货位</li>
+        <li><span class="all-status" style="background:pink"></span>满货物</li>
+        <li><span class="all-status" style="background:paleturquoise"></span>混合批次</li>
+      </ul>
+      <ul>
+        <li><span class="all-status" style="background: yellow;"></span>待检</li>
+        <li><span class="all-status" style="background: green;"></span>合格</li>
+        <li><span class="all-status" style="background: red;"></span>不合格</li>
+        <li><span class="all-status" style="background: orange;"></span>冻结</li>
+        <li><span class="all-status" style="background: blue;"></span>试作</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="location-map"></div>
+</div>
+
 <script>
   var data1 = [
-    { cargo: 'A17222', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A18', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'A19', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A20', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'A21', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A22', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A23', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'A24', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'A25', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A26', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'A17222', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', status: ['red', 'yellow', 'orange', 'blue', 'green'], bg: 'pink' },
+    { cargo: 'A18', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'A19', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A20', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'A21', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A22', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A23', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'A24', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'A25', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A26', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'A17', materil: 'RTOK276', cc: 'JESC', dd: '20', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
   ];
   var data2 = [
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B18', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'B19', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B20', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'B21', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B22', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B23', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'B24', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'B25', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B26', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue' },
-    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B18', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'B19', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B20', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'B21', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B22', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B23', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'B24', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'B25', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B26', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'red', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'blue', bg: 'pink' },
+    { cargo: 'B17', materil: 'RTOK276', cc: 'JESC', dd: '13', weight: '8000KG', ee: '80%', ff: 'green', bg: 'pink' },
   ]
 
-  var arr = []
-  var str = '';
-  if (!data || !data.length) {
-    $("#tilelayout").html("");
-    return;
-  }
-  $("#tilelayout").html("");
-  for (var i = 0; i < data.length; i++) {
-    str += '<li>' +
-      '<div class="k-block ' + data[i].ff + '" data-cargo="' + data[i].cargo + '">' +
-      '<div class="k-header ' + data[i].ff + '">'
-      + data[i].cargo +
-      '<span style="float:right;margin-right:5px;">' +
-      '<i style="background: blue"></i>' +
-      '<i ></i>' +
-      '<i style="background: yellow"></i>' +
-      '<i></i>' +
-      '<i style="background:green;"></i>' +
-      '</span>' +
-      '</div>' +
-      '<div class="content">' +
-      ' 物料：' + data[i].materil + ' <br>' +
-      '供应商：' + data[i].cc + ' <br>' +
-      '工装数：' + data[i].dd + ' <br>' +
-      '占用率：' + data[i].ee + ' <br>' +
-      '总重：' + data[i].weight +
-      '</div>' +
-      '</div>' +
-      '</li>'
-  }
-  $("#tilelayout").append(str);
-  $("#tilelayout").kendoTileLayout({
-    containers: [
-      {
-        colSpan: 1,
-        rowSpan: 1,
-        header: {
-          text: "Item one"
-        },
-        bodyTemplate: kendo.template($("#first").html())
-      },
-      {
-        colSpan: 1,
-        rowSpan: 1,
-        header: {
-          text: "Item two"
-        },
-        bodyTemplate: kendo.template($("#second").html())
+  var locationData = [
+    { text: "A", value: "1" },
+    { text: "B", value: "2" }
+  ];
+
+  // create DropDownList from input HTML element
+  $(".choose-location").kendoDropDownList({
+    dataTextField: "text",
+    dataValueField: "value",
+    dataSource: locationData,
+    index: 0,
+    change: function () {
+      refreshLocation()
+    }
+  })
+  refreshLocation()
+  function refreshLocation() {
+    var arr = []
+    var str = '';
+    // if (!data || !data.length) {
+    //   $("#tilelayout").html("");
+    //   return;
+    // }
+    $(".location-map").html("");
+    data1.forEach(function (item) {
+      let headerStatus = '<h5 class="k-card-title">A17222</h5>'
+      if (item.status) {
+        headerStatus += '<ul>'
+        item.status.forEach(function (item) {
+          headerStatus += '<li class="location-map-status" style="background:' + item + '"></li>'
+        })
+        headerStatus += '</ul>'
       }
-    ],
-    columns: 4
-  });
+      console.log(item.bg)
+      arr.push({
+        colSpan: 1,
+        rowSpan: 1,
+        header: {
+          template: headerStatus
+        },
+        bodyTemplate: '<ul style="background:' + item.bg + '">\
+        <li>物料：'+ item.materil + '</li>\
+        <li>供应商：'+ item.materil + '</li>\
+        <li>工装数：'+ item.cc + '</li>\
+        <li>占用率：'+ item.dd + '</li>\
+        <li>总重：'+ item.weight + '</li>\
+      </ul>'
+      })
+    })
+    $(".location-map").kendoTileLayout({
+      containers: arr,
+      columns: 4
+    });
+  }
+
 </script>

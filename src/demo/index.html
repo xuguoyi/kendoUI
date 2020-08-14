@@ -14,6 +14,12 @@
   <div id="tabstrip"></div>
   <footer class="k-link"></footer>
   <div id="changeThemeWindow"></div>
+  <ul id="context-menu">
+    <li class="refresh-single">刷新当前标签</li>
+    <li class="close-single">关闭当前标签</li>
+    <li class="close-other">关闭其他标签</li>
+    <li class="close-all">关闭所有标签</li>
+  </ul>
 
   <script type="text/javascript" src="../../js/require.js" data-main="../../js/main.js"></script>
   <script>
@@ -72,24 +78,18 @@
               { text: "张三" },
               { text: "仓库" },
               { text: "货主" },
-              { text: "仓库货主切换" },
+              { text: "仓库货主切换", select: function(e){ openWareHouseDialog() }},
               { text: "密码修改" }
             ]
           },
           {
-            text: "", spriteCssClass: 'fa fa-info', select: function (e) { openThemeDialog() }
+            text: "", spriteCssClass: 'fa fa-dashboard', select: function (e) { openThemeDialog() }
           },
           {
             text: "", spriteCssClass: 'fa fa-globe', items: [
               { text: "中文", attr: { lang: "zh-CN" }, select: function (e) { changeLang(e.target.context.innerHTML) } },
               { text: "English", attr: { lang: 'en-CA' }, select: function (e) { changeLang(e.target.context.innerHTML) } },
               { text: "日本語", attr: { lang: 'ja-JP' }, select: function (e) { changeLang(e.target.context.innerHTML) } }
-            ]
-          },
-          {
-            text: "", spriteCssClass: 'fa fa-bars', items: [
-              { text: "关闭其它", select: function (e) { closeOther() } },
-              { text: "关闭所有", select: function (e) { closeAll() } }
             ]
           }
         ],
@@ -100,16 +100,40 @@
         scrollable: true
       });
 
+      // openWareHouseDialog
+      function openWareHouseDialog() {
+        let obj = {
+          width: "400px",
+          height: "200px",
+          content: './swichWarehouse.html', 
+          title: 'Change WareHouse and Owner'
+        }
+        openDialog(obj)
+      }
+
       // changeTheme
       function openThemeDialog() {
-        themeWindow.kendoWindow({
+        let obj = {
           width: "615px",
           height: "350px",
-          title: "Change Theme",
+          content: './theme.html', 
+          title: 'Change Theme'
+        }
+        openDialog(obj)
+      }
+
+      // 打开弹窗
+      function openDialog(obj) {
+        themeWindow.kendoWindow({
+          content: obj.content,
           actions: ["Pin", "Minimize", "Maximize", "Close"],
-          content: "./theme.html",
           modal: { preventScroll: true }
         });
+        themeWindow.data("kendoWindow").setOptions({
+          width: obj.width,
+          height: obj.height,
+          title: obj.title,
+        })
         themeWindow.data("kendoWindow").center().open();
       }
 
@@ -202,8 +226,21 @@
         }
       }
 
+      $('.refresh-single').click(function(){
+        let idx = $('.k-state-active').attr('aria-controls').split('-')[1]-1
+        tabstrip.reload("li:eq("+idx+")")
+      })
+
+      $('.close-single').click(function(){
+        let idx = $('.k-state-active').attr('aria-controls').split('-')[1]-1
+        if(idx !== 0) {
+          tabstrip.remove(idx)
+          tabstrip.select(0)
+        }
+      })
+
       // 关闭其它
-      function closeOther() {
+      $('.close-other').click(function() {
         let n = $('#tabstrip li[role="tab"]').length
         let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
         for (let i = 1; i < idx - 1; i++) {
@@ -213,17 +250,25 @@
           tabstrip.remove(2)
         }
         tabstrip.select(1)
-      }
+      })
 
       // 关闭所有
-      function closeAll() {
+      $('.close-all').click(function(){
         let n = $('#tabstrip li[role="tab"]').length
         for (let i = 1; i < n; i++) {
           tabstrip.remove(1)
         }
         tabstrip.select(0)
-      }
-
+      }) 
+      
+      $("#context-menu").kendoContextMenu({
+        target: "#tabstrip",
+        animation: {
+          open: {
+                effects: "fadeIn"
+            }
+        }
+      });
     };
   </script>
 </body>
