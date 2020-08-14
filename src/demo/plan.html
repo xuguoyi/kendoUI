@@ -289,7 +289,7 @@
   var ids = {};
   var info_data = {};
   var myWindow = $(".dialog")
-  $("#info-grid").kendoGrid({
+  $("#info-grid", $el).kendoGrid({
     dataSource: dataSource,
     // pageable:false,
     pageable: {
@@ -600,7 +600,7 @@
     // },
     dataBound: function () {
       // 获取当前点击行的index值
-      var commands = $("#info-grid .k-master-row .k-command-cell a");
+      var commands = $("#info-grid .k-master-row .k-command-cell a", $el);
       for (var i = 0; i < commands.length; i++) {
         var a = commands[i];
         //给每个className为child的元素添加index属性;
@@ -634,7 +634,7 @@
       newFormData.remark = $('#remark').val()
       console.log(newFormData, 'formData')
 
-      var trs = $('#info-grid').data('kendoGrid').items()
+      var trs = $('#info-grid', $el).data('kendoGrid').items()
       trs.each(function (idx) {
         if ($(this).attr("data-id")) {
           var obj = new Object();
@@ -676,10 +676,10 @@
   // 一键折叠
   $('.k-hierarchy-cell.k-header').click(function () {
     if (trExpand) {
-      $("#info-grid").data("kendoGrid").collapseRow($("#info-grid tr.k-master-row"));
+      $("#info-grid", $el).data("kendoGrid").collapseRow($("#info-grid tr.k-master-row"));
       trExpand = false
     } else {
-      $("#info-grid").data("kendoGrid").expandRow($("#info-grid tr.k-master-row"));
+      $("#info-grid", $el).data("kendoGrid").expandRow($("#info-grid tr.k-master-row"));
       trExpand = true
     }
   })
