@@ -100,7 +100,7 @@
   }
 
   function determine_window(){
-    $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
+    $(".info-grid").data("kendoGrid").expandRow($(".info-grid").find("tr.k-master-row")[index]);
     var sel_data = $(".pos").data("sel_data");
     $.each(sel_data, function (i, item) {
       if ((ids[parentId]).indexOf(item.code) == -1) {
@@ -121,13 +121,13 @@
   function clearInfo() {
     $(".pos").data("kendoGrid").clearSelection();
     // 关闭已打开的子表格 
-    // var openDetails = $("#info-grid .k-master-row td a.k-i-collapse");
+    // var openDetails = $(".info-grid .k-master-row td a.k-i-collapse");
     // openDetails.each(function () {
     //   $(this).click();
     // })
-    $("#info-grid").data("kendoGrid").collapseRow($("#info-grid").find("tr.k-master-row")[index]);
+    $(".info-grid").data("kendoGrid").collapseRow($(".info-grid").find("tr.k-master-row")[index]);
     // 打开对应的子表格
-    $("#info-grid").data("kendoGrid").expandRow($("#info-grid").find("tr.k-master-row")[index]);
+    $(".info-grid").data("kendoGrid").expandRow($(".info-grid").find("tr.k-master-row")[index]);
   }
 
 </script>

@@ -1,0 +1,85 @@
+<div id="window-xgy" class="window-xgy"></div>
+<script>
+  $(function(){
+    var $window = $("#window-xgy");
+    $window.attr('id', '');
+    $window.kendoGrid({
+      toolbar: [
+        { template: '<div><a class="k-button btn-ok" href="javascript:;">确定</a>\
+        <a class="k-button btn-cancel" href="javascript:;"">取消</a></div>' }
+      ],
+      dataSource: {
+        data: [
+          {
+            code: 'P10100001',
+            name: '零部件3PN-1+A+A',
+            barCode: '1',
+            quality_flag: '合格',
+            authentication_state: '试作',
+            location_area_id: 'AF',
+            location_id: 'AF1-1',
+            available_pack_qty: 100,
+            available_qty: 100,
+            available_total_qty: 2000
+          },
+          {
+            code: 'P10100002',
+            name: '零部件3防污帽φ14.5',
+            barCode: '2',
+            quality_flag: '不合格',
+            authentication_state: '量产',
+            location_area_id: 'BH',
+            location_id: 'BH1-i',
+            available_pack_qty: 200,
+            available_qty: 0,
+            available_total_qty: 2000
+          }
+        ],
+        serverPaging: true,
+        serverSorting: true,
+        serverFiltering: true,
+        pageSize: 7,
+        // filter: { field: "EmployeeID", operator: "eq", value: data.EmployeeID },
+        schema: {
+          model: {
+            id: 'code'
+          }
+        }
+      },
+      filterable: {
+        mode: 'row'
+      },
+      columns: [
+        // { selectable:true, width:50 },
+        { field: "code", title: "物料代码", width: 100 },
+        { field: "name", title: "物料名称", width: 100},
+        { field: "barCode", title: "商品条码", width: 100 },
+        { field: "quality_flag", title: "品质", width: 100 },
+        { field: "authentication_state", title: "认证状态", width: 100},
+        { field: "location_area_id", title: "货区", width: 100},
+        { field: "location_id", title: "货位", width: 100},
+        // { field: "ShipName", title: "货位", editor: categoryDropDownEditor, template: "#=Category.CategoryName#"},
+        { field: "available_pack_qty", title: "可用包装数", width: 100},
+        { field: "available_qty", title: "可用个数", width: 100},
+        { field: "available_total_qty", title: "可用总数", width: 100}
+      ],
+      pageable: {
+        pageSize: 10,
+        refresh: true
+      },
+      // pageable:false,
+      height: 320,
+      persistSelection: true,
+      selectable: true,
+      change: function (e) {
+        var selectedRows = this.select();
+        var selectedDataItems = [];
+        for (var i = 0; i < selectedRows.length; i++) {
+          var dataItem = this.dataItem(selectedRows[i]);
+          selectedDataItems.push(dataItem);
+        }
+        $window.closest('.dialog').data('sel_data', selectedDataItems);
+      }
+    });
+  })
+</script>
