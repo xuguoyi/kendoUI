@@ -3,7 +3,7 @@ define([], function(){
   var $window;
 
   function clearInfo() {
-    $window.find('.window-xgy').data("kendoGrid").clearSelection();
+    $window.find('.window-choose-location').data("kendoGrid").clearSelection();
     // 关闭已打开的子表格 
     // var openDetails = $(".info-grid .k-master-row td a.k-i-collapse");
     // openDetails.each(function () {
