@@ -260,3 +260,23 @@ a.tab-link {
 #swichWarehouse .k-content>div h4 {
   width: 80px;
 }
+
+/* 选人框 */
+input~.fa-user {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}
+.choose-user .k-listbox {
+  width: 236px;
+  height: 310px;
+}
+
+.choose-user .k-listbox:first-of-type {
+  width: 270px;
+  margin-right: 1px;
+}
+.choose-user .user-btn{
+  margin-top: 10px;
+  text-align: center;
+}

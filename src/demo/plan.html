@@ -15,6 +15,8 @@
     </li>
   </ul>
   <div class="dialog"></div>
+
+  <div class="choose-user"></div>
   <div class="oper-btn">
     <button title="保存"><i class="fa fa-save"></i>保存</button>
     <button title="关闭"><i class="fa fa-close"></i>关闭</button>
@@ -75,7 +77,9 @@
       regist_date: '2020-08-10 09:50:22',
       regist_pname: '陆中杰',
       last_update_date: '2020-08-12 13:45:10',
-      last_update_pname: '张三'
+      last_update_pname: '张三',
+      select_people: []
+
     }
     var exampleform = $(".exampleform", $el).kendoForm({
       orientation: "horizontal",
@@ -168,7 +172,19 @@
               field: "last_update_pname",
               label: "更新人:",
               colSpan: 1
+            },
+          {
+            field: "select_people",
+            label: "选人:",
+            colSpan: 2,
+            editor: 'AutoComplete',
+            editorOptions: {
+              enable: false,
+              separator: ", ",
+              dataTextField: "key",
+              dataValueField: "value",
             }
+          },
           ]
         },
       ],
@@ -193,6 +209,35 @@
     if (!(formData.status === '新建' || formData.status === '收货中')) {
       $('#remark').attr('readonly', true)
     }
+
+    // 多选人
+  var $chooseUser = $('.choose-user', $el)
+  $('div[data-container-for="select_people"]>span', $el).append('<span class="fa fa-user"></span>')
+  $('div[data-container-for="select_people"]', $el).click(function() {
+    // exampleform.data("kendoForm")._model.select_people = [{key: 3, value: 'C'}]
+    // console.log(exampleform.data("kendoForm")._model.select_people)
+    //选人弹出框
+    $chooseUser.kendoWindow({
+      width: "540px",
+      height: "400px",
+      title: "选人",
+      content: "./choose-user/index.html",
+      modal: {
+        preventScroll: true
+      },
+    }).data("kendoWindow").center().open()
+
+    require(['../src/demo/choose-user/main'], function(initFn){
+      initFn($el, $chooseUser, function(sel_user){
+        var html = ''
+        sel_user.forEach(item => {
+          html += item.value+','
+        })
+        exampleform.data("kendoForm")._model.select_people = sel_user
+        $('#select_people', $el).val(html)
+      });
+    })
+  })
 
     // 明细
     var dataSource = new kendo.data.DataSource({

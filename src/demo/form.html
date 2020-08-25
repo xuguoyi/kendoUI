@@ -1,4 +1,4 @@
-<div class="all-form">
+<div class="all-form" id="all-form">
   <h1 class="form-title">表单</h1>
   <div id="validation-success"></div>
   <nav id="stepper"></nav>
@@ -21,6 +21,7 @@
       </li>
     </ul>
     <div id="dialog"></div>
+    <div class="choose-user"></div>
     <div class="oper-btn">
       <button title="保存"><i class="fa fa-save"></i></button>
       <button title="关闭"><i class="fa fa-close"></i></button>
@@ -30,6 +31,9 @@
   </div>
 </div>
 <script type="text/javascript">
+$(function(){
+  var $el = $('#all-form');
+  $el.attr('id', '');
   var validationSuccess = $("#validation-success");
   // 状态
   $("#stepper").kendoStepper({
@@ -54,7 +58,7 @@
   panelBar.expand($('[id^="item"]'))
 
   // form
-  var exampleform = $("#exampleform").kendoForm({
+  var exampleform = $("#exampleform", $el).kendoForm({
     orientation: "horizontal",
     formData: {
       FirstName: "John",
@@ -68,22 +72,19 @@
       Products: '',
       Orders: '',
       Remark: 'erereeeeeee',
-      Remark1: 'dfdfdfdfdf'
-    },
-    layout: "grid",
-    grid: {
-      cols: 2,
-      // gutter: 20
+      Remark1: 'dfdfdfdfdf',
+      select_people: [{key: 1, value: 'A'}, {key: 2, value: 'B'}]
     },
     items: [
       {
         type: "group",
-        layout: "grid",
-        grid: { cols: 1, gutter: 10 },
+        // layout: "grid",
+        grid: { cols: 2, gutter: 10 },
         items: [
           {
             field: "FirstName",
             label: "First Name:",
+            colSpan: 1,
             editor: 'AutoComplete',
             editorOptions: {
               enable: false
@@ -92,12 +93,14 @@
           {
             field: "LastName",
             label: "Last Name:",
+            colSpan: 1,
             editor: "NumericTextBox",
             validation: { required: true }
           },
           {
             field: "Email",
             label: "Email:",
+            colSpan: 1,
             validation: {
               required: true,
               email: true
@@ -106,6 +109,7 @@
           {
             field: "Categories",
             label: "Categories:",
+            colSpan: 1,
             editor: 'DropDownList',
             editorOptions: {
               optionLabel: "Select category...",
@@ -123,6 +127,7 @@
           {
             field: "Orders",
             label: "Orders:",
+            colSpan: 1,
             editor: 'DropDownList',
             editorOptions: {
               autoBind: false,
@@ -138,17 +143,11 @@
                 }
               }
             }
-          }
-        ]
-      },
-      {
-        type: "group",
-        layout: "grid",
-        grid: { cols: 1, gutter: 10 },
-        items: [
+          },
           {
             field: "Country",
             label: "Country:",
+            colSpan: 1,
             editor: "DropDownList",
             // validation: { required: true },
             editorOptions: {
@@ -166,17 +165,20 @@
           {
             field: "AddressLine",
             label: "Address Line:",
+            colSpan: 1,
             optional: true,
             validation: { required: true }
           },
           {
             field: "Effective",
             label: "Effective:",
+            colSpan: 1,
             editor: "Switch"
           },
           {
             field: "Products",
             label: "Products:",
+            colSpan: 1,
             editor: 'DropDownList',
             editorOptions: {
               autoBind: false,
@@ -192,30 +194,16 @@
                 }
               }
             }
-          }
-        ]
-      },
-      {
-        type: "group",
-        layout: "grid",
-        grid: { cols: 1 },
-        colSpan: 2,
-        items: [
+          },
           {
             field: "Remark",
             label: "Remark:",
-          }
-        ]
-      },
-      {
-        type: "group",
-        layout: "grid",
-        grid: { cols: 1 },
-        colSpan: 2,
-        items: [
+            colSpan: 2,
+          },
           {
             field: "Remark1",
             label: "下拉多选:",
+            colSpan: 2,
             placeholder: "Select products...",
             dataTextField: "ProductName",
             dataValueField: "ProductID",
@@ -233,7 +221,19 @@
               { ProductName: "Chang", ProductID: 2 },
               { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
             ]
-          }
+          },
+          {
+            field: "select_people",
+            label: "选人:",
+            colSpan: 2,
+            editor: 'AutoComplete',
+            editorOptions: {
+              enable: false,
+              separator: ", ",
+              dataTextField: "key",
+              dataValueField: "value",
+            }
+          },
         ]
       }
     ],
@@ -304,6 +304,34 @@
         ]
       });
   }
+  // 多选人
+  var $chooseUser = $('.choose-user', $el)
+  $('div[data-container-for="select_people"]>span', $el).append('<span class="fa fa-user"></span>')
+  $('div[data-container-for="select_people"]', $el).click(function() {
+    // exampleform.data("kendoForm")._model.select_people = [{key: 3, value: 'C'}]
+    // console.log(exampleform.data("kendoForm")._model.select_people)
+    //选人弹出框
+    $chooseUser.kendoWindow({
+      width: "540px",
+      height: "400px",
+      title: "选人",
+      content: "./choose-user/index.html",
+      modal: {
+        preventScroll: true
+      },
+    }).data("kendoWindow").center().open()
+
+    require(['../src/demo/choose-user/main'], function(initFn){
+      initFn($el, $chooseUser, function(sel_user){
+        var html = ''
+        sel_user.forEach(item => {
+          html += item.value+','
+        })
+        exampleform.data("kendoForm")._model.select_people = sel_user
+        $('#select_people', $el).val(html)
+      });
+    })
+  })
 
   // 明细
   var dataSource = new kendo.data.DataSource({
@@ -492,5 +520,5 @@
   $(".fa-bath").click(function () {
     $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
   })
-
+})
 </script>
