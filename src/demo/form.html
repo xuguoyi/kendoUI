@@ -30,12 +30,12 @@
     </div>
   </div>
 </div>
-<script type="text/x-kendo-template" class="dialog-choose-user">
+<!-- <script type="text/x-kendo-template" class="dialog-choose-user">
   <label for="user-optional" style="width: 270px;display: inline-block;">Employees</label>
   <label for="user-selected">Developers</label>
   <select id="user-optional"></select>
   <select id="user-selected"></select>
-</script>
+</script> -->
 <script type="text/javascript">
   $(function () {
     var $el = $('#all-form');
@@ -310,21 +310,28 @@
           ]
         });
     }
+    
     // 多选人弹出框
+    var modalLen = $('.choose-user').length;
     var $chooseUser = $('.choose-user', $el)
     $chooseUser.kendoDialog({
       width: "540px",
       height: "455px",
       title: "选人",
       closable: true,
-      content: kendo.template($('.dialog-choose-user').html()),
+      content: '<div>\
+        <label for="user-optional-'+modalLen+'" style="width: 270px;display: inline-block;">Employees</label>\
+        <label for="user-selected-'+modalLen+'">Developers</label>\
+        <select id="user-optional-'+modalLen+'"></select>\
+        <select id="user-selected-'+modalLen+'"></select>\
+      </div>',
       actions: [
         { text: 'Close' },
         {
           text: 'OK',
           primary: true,
           action: function (e) {
-            var data = $("#user-selected").data('kendoListBox').dataSource._data
+            var data = $("#user-selected-"+modalLen).data('kendoListBox').dataSource._data
             var html = ''
             data.forEach(item => {
               html += item.value + ','
@@ -336,7 +343,7 @@
       ]
     }).data('kendoDialog')
 
-    $("#user-optional").kendoListBox({
+    $("#user-optional-"+modalLen).kendoListBox({
       dataTextField: "value",
       dataValueField: "key",
       dataSource: [
@@ -344,14 +351,14 @@
         { key: 2, value: 'B' },
         { key: 3, value: 'C' }
       ],
-      connectWith: "user-selected",
+      connectWith: "user-selected-"+modalLen,
       toolbar: {
         position: "right",
         tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
       }
     });
 
-    $("#user-selected").kendoListBox({
+    $("#user-selected-"+modalLen).kendoListBox({
       dataTextField: "value",
       dataValueField: "key",
     });
