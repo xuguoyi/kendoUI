@@ -1,0 +1,41 @@
+<div class="demo-section k-content wide window-choose-user" id="window-choose-user">
+  <div class="user-btn">
+    <button class="user-true">确定</button>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    var $el = $("#window-choose-user");
+    $el.attr('id', '');
+    var len = $('.window-choose-user').length
+    var html = '<label for="user-optional-'+len+'" style="width: 270px;display: inline-block;">Employees</label>\
+                <label for="user-selected-'+len+'">Developers</label>\
+                <select id="user-optional-'+len+'"></select>\
+                <select id="user-selected-'+len+'"></select>'
+    $el.prepend($(html))
+    $("#user-optional-"+len, $el).kendoListBox({
+      dataTextField: "value",
+      dataValueField: "key",
+      dataSource: [
+        { key: 1, value: 'A' },
+        { key: 2, value: 'B' },
+        { key: 3, value: 'C' }
+      ],
+      connectWith: "user-selected-"+len,
+      toolbar: {
+        position: "right",
+        tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+      }
+    });
+
+    $("#user-selected-"+len, $el).kendoListBox({
+      dataTextField: "value",
+      dataValueField: "key",
+      // connectWith: "user-optional"
+    });
+
+    $('.user-true', $el).kendoButton()
+
+  });
+</script>

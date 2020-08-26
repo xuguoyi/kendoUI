@@ -30,12 +30,6 @@
     </div>
   </div>
 </div>
-<!-- <script type="text/x-kendo-template" class="dialog-choose-user">
-  <label for="user-optional" style="width: 270px;display: inline-block;">Employees</label>
-  <label for="user-selected">Developers</label>
-  <select id="user-optional"></select>
-  <select id="user-selected"></select>
-</script> -->
 <script type="text/javascript">
   $(function () {
     var $el = $('#all-form');
@@ -310,61 +304,33 @@
           ]
         });
     }
-    
+
     // 多选人弹出框
-    var modalLen = $('.choose-user').length;
     var $chooseUser = $('.choose-user', $el)
-    $chooseUser.kendoDialog({
-      width: "540px",
-      height: "455px",
-      title: "选人",
-      closable: true,
-      content: '<div>\
-        <label for="user-optional-'+modalLen+'" style="width: 270px;display: inline-block;">Employees</label>\
-        <label for="user-selected-'+modalLen+'">Developers</label>\
-        <select id="user-optional-'+modalLen+'"></select>\
-        <select id="user-selected-'+modalLen+'"></select>\
-      </div>',
-      actions: [
-        { text: 'Close' },
-        {
-          text: 'OK',
-          primary: true,
-          action: function (e) {
-            var data = $("#user-selected-"+modalLen).data('kendoListBox').dataSource._data
-            var html = ''
-            data.forEach(item => {
-              html += item.value + ','
-            })
-            exampleform.data("kendoForm")._model.select_people = data
-            $('#select_people', $el).val(html)
-          }
-        }
-      ]
-    }).data('kendoDialog')
-
-    $("#user-optional-"+modalLen).kendoListBox({
-      dataTextField: "value",
-      dataValueField: "key",
-      dataSource: [
-        { key: 1, value: 'A' },
-        { key: 2, value: 'B' },
-        { key: 3, value: 'C' }
-      ],
-      connectWith: "user-selected-"+modalLen,
-      toolbar: {
-        position: "right",
-        tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-      }
-    });
-
-    $("#user-selected-"+modalLen).kendoListBox({
-      dataTextField: "value",
-      dataValueField: "key",
-    });
     $('div[data-container-for="select_people"]>span', $el).append('<span class="fa fa-user"></span>')
     $('div[data-container-for="select_people"]', $el).click(function () {
-      $chooseUser.data("kendoDialog").open();
+      //选人弹出框
+      $chooseUser.kendoWindow({
+        width: "540px",
+        height: "400px",
+        title: "选人",
+        content: "./choose-user/index.html",
+        modal: {
+          preventScroll: true
+        },
+      }).data("kendoWindow").center().open()
+      $chooseUser.on('click', '.user-true', function () {
+        var $len = $('.window-choose-user').length
+        var html = ''
+        var sel_user = $("#user-selected-" + $len).data('kendoListBox').dataSource._data
+        sel_user.forEach(item => {
+          html += item.value + ','
+        })
+        exampleform.data("kendoForm")._model.select_people = sel_user
+        $('#select_people', $el).val(html)
+        $chooseUser.data("kendoWindow").close();
+      });
+
     })
 
     // 明细
