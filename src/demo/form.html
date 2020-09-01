@@ -311,7 +311,7 @@
     $('div[data-container-for="select_people"]', $el).click(function () {
       //选人弹出框
       $chooseUser.kendoWindow({
-        width: "540px",
+        width: "550px",
         height: "400px",
         title: "选人",
         content: "./choose-user/index.html",
@@ -323,7 +323,7 @@
         var $len = $('.window-choose-user').length
         var html = ''
         var sel_user = $("#user-selected-" + $len).data('kendoListBox').dataSource._data
-        sel_user.forEach(item => {
+        sel_user.forEach(function(item) {
           html += item.value + ','
         })
         exampleform.data("kendoForm")._model.select_people = sel_user

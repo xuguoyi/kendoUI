@@ -23,7 +23,6 @@ $(function(){
 
   var html = '';
   for (let i in allColorThemes) {
-    console.log('for in', i)
     html += '<h3>' + i + '</h3><div class="color-block">';
     allColorThemes[i].forEach(function (item) {
       html += '<div data="' + item.value + '">\

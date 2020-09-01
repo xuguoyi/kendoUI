@@ -9,10 +9,12 @@
     var $el = $("#window-choose-user");
     $el.attr('id', '');
     var len = $('.window-choose-user').length
-    var html = '<label for="user-optional-'+len+'" style="width: 270px;display: inline-block;">Employees</label>\
+    var html = '<label for="user-optional-'+len+'" style="width: 50%; display: inline-block;">Employees</label>\
                 <label for="user-selected-'+len+'">Developers</label>\
-                <select id="user-optional-'+len+'"></select>\
-                <select id="user-selected-'+len+'"></select>'
+                <div style="display: flex;">\
+                  <select id="user-optional-'+len+'"></select>\
+                  <select id="user-selected-'+len+'"></select>\
+                </div>'
     $el.prepend($(html))
     $("#user-optional-"+len, $el).kendoListBox({
       dataTextField: "value",

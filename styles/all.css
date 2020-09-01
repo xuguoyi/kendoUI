@@ -268,13 +268,13 @@ input~.fa-user {
   right: 7px;
 }
 .choose-user .k-listbox {
-  width: 236px;
+  width: 50%;
   height: 310px;
 }
 
 .choose-user .k-listbox:first-of-type {
-  width: 270px;
-  margin-right: 1px;
+  width: calc(50% + 37px);
+  margin-right: 5px;
 }
 .choose-user .user-btn{
   margin-top: 10px;
