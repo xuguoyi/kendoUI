@@ -280,3 +280,10 @@ input~.fa-user {
   margin-top: 10px;
   text-align: center;
 }
+
+.d-n {
+  display: none;
+}
+.k-form-horizontal .k-form-field.d-n {
+  display: none;
+}

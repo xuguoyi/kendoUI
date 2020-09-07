@@ -250,6 +250,8 @@
       // }
     });
 
+    $('#Remark', $el).closest('.k-form-field').addClass('d-n')
+
     // grid
     var dataSource = new kendo.data.DataSource({
       pageSize: 20,
@@ -492,7 +494,7 @@
     }).data("kendoTooltip");
 
     // 表单必填校验
-    $('.fa-save').on('click', function () {
+    $('.fa-save', $el).on('click', function () {
       var validatable = $("#panelbar").kendoValidator().data("kendoValidator");
       if (validatable.validate() === false) {
         var errors = validatable.errors();
