@@ -238,7 +238,7 @@
         let idx = $('.k-state-active').attr('aria-controls').split('-')[1]-1
         if(idx !== 0) {
           tabstrip.remove(idx)
-          tabstrip.select(0)
+          tabstrip.select(idx-1)
         }
       })
 
