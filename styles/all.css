@@ -34,18 +34,14 @@ html, body {
   letter-spacing: 2px;
   flex-shrink: 0;
   margin-left: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 999;
 }
 .menu {
   width: 100%;
   height: 54px;
+  display: flex;
+  justify-content: space-between;
 }
-#horizontalMenu li:nth-child(1) {
-  margin-left: calc(100% - 720px)
-} 
 .horizontal, 
 #horizontalMenu, 
 #horizontalMenu.k-menu .k-item,
@@ -281,9 +277,16 @@ input~.fa-user {
   text-align: center;
 }
 
+/* 公共表单样式：items的隐藏，readonly样式 */
 .d-n {
-  display: none;
+    display: none;
 }
+
 .k-form-horizontal .k-form-field.d-n {
-  display: none;
+    display: none;
+}
+
+input[readonly="readonly"], textarea[readonly="readonly"] {
+    background-color: #eee;
+    color: #aaa;
 }
