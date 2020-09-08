@@ -719,8 +719,12 @@
     // 必填
     $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
 
-    $(".fa-refresh", $el).click(function () {
-      $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
+    // 跳转到指定页面，并刷新
+    $(".fa-refresh", $el).closest('button').click(function () {
+      var contentUrl = $("#tabstrip").data("kendoTabStrip")._contentUrls
+      var idx = contentUrl.indexOf('./frozen.html')
+      $("#tabstrip").data("kendoTabStrip").select(idx);
+      $("#tabstrip").data("kendoTabStrip").reload("li:eq(" + idx + ")");
     })
 
     var trExpand = true
