@@ -669,6 +669,28 @@
     // operBtn
     var tooltip = $(".oper-btn button", $el).kendoButton().data("kendoButton");
 
+
+    var customValidatable = $(".exampleform", $el).kendoValidator({
+      rules: {
+        // customRule1: function(input){
+        //   console.log(1111111111111111)
+        //   debugger
+        //   // all of the input must have a value
+        //   return $.trim(input.val()) !== "";
+        // },
+        customRule2: function(input) {
+          //only 'Tom' will be valid value for the username input
+          if (input.is("[name=reference_doc_no]")) {
+            return input.val() === "Tom";
+          }
+          return true;
+        }
+      },
+      messages: {
+        customRule1: "All fields are required",
+        customRule2: "Your UserName must be Tom"
+      }
+    }).data("kendoValidator");
     // 表单必填校验
     $('.fa-save', $el).on('click', function () {
       var validatable = $(".panelbar", $el).kendoValidator().data("kendoValidator");
@@ -685,29 +707,34 @@
         var newFormData = JSON.parse(JSON.stringify(exampleform.data("kendoForm")._model))
         newFormData.remark = $('#remark', $el).val()
         console.log(newFormData, 'formData')
+        
+        if(customValidatable.validate() === false){
+          alert('自定义校验失败!');
+        }else{
+          alert('自定义校验成功!');
+        }
+        // var trs = $('.info-grid', $el).data('kendoGrid').items()
+        // trs.each(function (idx) {
+        //   if ($(this).attr("data-id")) {
+        //     var obj = new Object();
+        //     obj.warehousingPlansDetailId = $(this).attr("data-id");
+        //     obj.items = [];
+        //     var datailGrid = $(this).next("tr");
+        //     // 遍历子表格的每一行
+        //     $("tbody tr", datailGrid).each(function (i, j) {
+        //       var item = new Object();
+        //       item.toolNumber = $(".toolNumber", this).text();
+        //       if (item.toolNumber != 1) {
+        //         $(".toolNumber", this).css('border', '1px solid #f00')
+        //         var idn = idx + 1
+        //         var x = $t('plan', 'message', { m: idx + 1, n: i, name: $t('plan', 'inbound_pack_qty') })
+        //         mss += "<div class='k-messagebox k-messagebox-error'>" + x + "</div>"
 
-        var trs = $('.info-grid', $el).data('kendoGrid').items()
-        trs.each(function (idx) {
-          if ($(this).attr("data-id")) {
-            var obj = new Object();
-            obj.warehousingPlansDetailId = $(this).attr("data-id");
-            obj.items = [];
-            var datailGrid = $(this).next("tr");
-            // 遍历子表格的每一行
-            $("tbody tr", datailGrid).each(function (i, j) {
-              var item = new Object();
-              item.toolNumber = $(".toolNumber", this).text();
-              if (item.toolNumber != 1) {
-                $(".toolNumber", this).css('border', '1px solid #f00')
-                var idn = idx + 1
-                var x = $t('plan', 'message', { m: idx + 1, n: i, name: $t('plan', 'inbound_pack_qty') })
-                mss += "<div class='k-messagebox k-messagebox-error'>" + x + "</div>"
-
-              }
-            })
-          }
-        })
-        validationSuccess.html(mss);
+        //       }
+        //     })
+        //   }
+        // })
+        // validationSuccess.html(mss);
       }
     })
 
@@ -716,9 +743,8 @@
     })
     
     $('.fa-check', $el).closest('button').on('click', function () {
-      $('.alert', $el).kendoAlert({
+      $('<div>This is your Kendo Dialog</div>').kendoAlert({
         title: 'xxx',
-        content: "This is your Kendo Dialog.",
         minWidth: 300
       }).data("kendoAlert").open();
     })
