@@ -14,6 +14,7 @@
       </div>
     </li>
   </ul>
+  <div class="alert"></div>
   <div class="dialog"></div>
   <div class="choose-user"></div>
   <div class="oper-btn">
@@ -712,6 +713,14 @@
 
     $('.fa-close', $el).on('click', function () {
       fun.closeCurrentPage()
+    })
+    
+    $('.fa-check', $el).closest('button').on('click', function () {
+      $('.alert', $el).kendoAlert({
+        title: 'xxx',
+        content: "This is your Kendo Dialog.",
+        minWidth: 300
+      }).data("kendoAlert").open();
     })
 
     // 必填
