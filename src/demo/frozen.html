@@ -74,17 +74,9 @@ $(function(){
   });
 
   $('#frozen .tab-link').click(function() {
-    var tabStrip = $('#tabstrip').data('kendoTabStrip');
-    tabStrip.append(
-      [{
-        text: '入库明细单',
-        contentUrl: './plan.html?no='+$(this).text()
-      }]
-    );
-    $(tabStrip.contentElements.slice(-1)[0]).data('content', {txt: $(this).text()});
-    var tabsElements = $('#tabstrip li[role="tab"]:last-child');
-    tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
-    tabStrip.activateTab(tabsElements)
+    var url = './plan.html?no='+$(this).text()
+    var text = '入库明细单'
+    fun.openPage(url, text)
   })
 })
 </script>
