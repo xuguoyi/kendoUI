@@ -176,28 +176,8 @@
       function addTab(e) {
         let text = e;
         let url = $('.k-link.k-menu-link:contains(' + e + ')').closest('li').attr('url')
-        if (url && !~$.inArray(url, tabstrip._contentUrls)) {
-          tabstrip.append(
-            [{
-              text: text,
-              contentUrl: url,
-            }]
-          )
-          var tabsElements = $('#tabstrip li[role="tab"]:last-child');
-          tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
-          tabstrip.activateTab(tabsElements)
-          contAddHeight()
-        } else {
-          let n = tabstrip._contentUrls.indexOf(url)
-          tabstrip.select(n)
-        }
+        fun.openPage(url, text)
       }
-
-      // 计算tab内高度
-      function contAddHeight() {
-        $('#tabstrip>.k-content').addClass("selected")
-      }
-      contAddHeight()
 
       // localStorage获取theme
       if (localStorage.getItem("theme")) {
