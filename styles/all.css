@@ -121,6 +121,7 @@ html, body {
 }
 .oper-btn .fa {
   font-size: 20px;
+  margin-right: 5px;
 }
 .all-form .k-form-buttons.k-buttons-end {
   display: none;
