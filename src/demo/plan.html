@@ -25,9 +25,13 @@
   </div>
 </div>
 <script type="text/javascript">
+console.log('刷新')
   $(function () {
     var $el = $('#plan');
     $el.attr('id', '');
+    require(['./init'], function (initFn) {
+      initFn.init($el)
+    })
     // var data = $el.closest('.k-content').data('content');
     var validationSuccess = $(".validation-success", $el);
     // 状态
@@ -666,10 +670,6 @@
       }
     })
 
-    // operBtn
-    var tooltip = $(".oper-btn button", $el).kendoButton().data("kendoButton");
-
-
     var customValidatable = $(".exampleform", $el).kendoValidator({
       rules: {
         // customRule1: function(input){
@@ -692,7 +692,7 @@
       }
     }).data("kendoValidator");
     // 表单必填校验
-    $('.fa-save', $el).on('click', function () {
+    $('.fa-save', $el).closest('button').on('click', function () {
       var validatable = $(".panelbar", $el).kendoValidator().data("kendoValidator");
       if (validatable.validate() === false) {
         var errors = validatable.errors();
@@ -708,38 +708,35 @@
         newFormData.remark = $('#remark', $el).val()
         console.log(newFormData, 'formData')
         
-        if(customValidatable.validate() === false){
-          alert('自定义校验失败!');
-        }else{
-          alert('自定义校验成功!');
-        }
-        // var trs = $('.info-grid', $el).data('kendoGrid').items()
-        // trs.each(function (idx) {
-        //   if ($(this).attr("data-id")) {
-        //     var obj = new Object();
-        //     obj.warehousingPlansDetailId = $(this).attr("data-id");
-        //     obj.items = [];
-        //     var datailGrid = $(this).next("tr");
-        //     // 遍历子表格的每一行
-        //     $("tbody tr", datailGrid).each(function (i, j) {
-        //       var item = new Object();
-        //       item.toolNumber = $(".toolNumber", this).text();
-        //       if (item.toolNumber != 1) {
-        //         $(".toolNumber", this).css('border', '1px solid #f00')
-        //         var idn = idx + 1
-        //         var x = $t('plan', 'message', { m: idx + 1, n: i, name: $t('plan', 'inbound_pack_qty') })
-        //         mss += "<div class='k-messagebox k-messagebox-error'>" + x + "</div>"
+        customValidatable.validate()
+        // if(customValidatable.validate() === false){
+        //   alert('自定义校验失败!');
+        // }else{
+        //   alert('自定义校验成功!');
+        // }
+        var trs = $('.info-grid', $el).data('kendoGrid').items()
+        trs.each(function (idx) {
+          if ($(this).attr("data-id")) {
+            var obj = new Object();
+            obj.warehousingPlansDetailId = $(this).attr("data-id");
+            obj.items = [];
+            var datailGrid = $(this).next("tr");
+            // 遍历子表格的每一行
+            $("tbody tr", datailGrid).each(function (i, j) {
+              var item = new Object();
+              item.toolNumber = $(".toolNumber", this).text();
+              if (item.toolNumber != 1) {
+                $(".toolNumber", this).css('border', '1px solid #f00')
+                var idn = idx + 1
+                var x = $t('plan', 'message', { m: idx + 1, n: i, name: $t('plan', 'inbound_pack_qty') })
+                mss += "<div class='k-messagebox k-messagebox-error'>" + x + "</div>"
 
-        //       }
-        //     })
-        //   }
-        // })
-        // validationSuccess.html(mss);
+              }
+            })
+          }
+        })
+        validationSuccess.html(mss);
       }
-    })
-
-    $('.fa-close', $el).on('click', function () {
-      fun.closeCurrentPage()
     })
     
     $('.fa-check', $el).closest('button').on('click', function () {
@@ -749,25 +746,6 @@
       }).data("kendoAlert").open();
     })
 
-    // 必填
-    $('input[required="required"]').closest('.k-form-field').find('label').addClass('required')
-
-    // 跳转到指定页面，并刷新
-    $(".fa-refresh", $el).closest('button').click(function () {
-      fun.jumpRefresh('./frozen.html')
-    })
-
-    var trExpand = true
-    // 一键折叠
-    $('.k-hierarchy-cell.k-header', $el).click(function () {
-      if (trExpand) {
-        $(".info-grid", $el).data("kendoGrid").collapseRow($(".info-grid tr.k-master-row", $el));
-        trExpand = false
-      } else {
-        $(".info-grid", $el).data("kendoGrid").expandRow($(".info-grid tr.k-master-row", $el));
-        trExpand = true
-      }
-    })
     // 多选人弹出框
     var $chooseUser = $('.choose-user', $el)
     $('div[data-container-for="select_people"]>span', $el).append('<span class="fa fa-user"></span>')

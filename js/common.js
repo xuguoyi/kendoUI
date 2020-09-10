@@ -7,7 +7,7 @@ define([], function(){
     $("#tabstrip").data("kendoTabStrip").reload("li:eq(" + idx + ")");
   }
 
-  // 关闭当前页面
+  // 关闭当前页面, 跳转到上一个页面
   function closeCurrentPage(){
     let idx = $('.k-state-active').attr('aria-controls').split('-')[1]
     $("#tabstrip").data("kendoTabStrip").remove(idx - 1);
