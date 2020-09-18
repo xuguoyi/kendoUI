@@ -33,9 +33,33 @@ define([], function(){
     }
   }
   
+  // 重新渲染tabstrip(重定向当前页面)
+  function redirectPage(url) {
+    var idx = $('.k-state-active').attr('aria-controls').split('-')[1]
+    var _contentUrls = $("#tabstrip").data("kendoTabStrip")._contentUrls
+    var arr = []
+    $('#tabstrip .k-tabstrip-items').find('.k-link[data-content-url]').each(function(item) {
+      arr.push({
+        text: $(this).text(),
+        ContentUrl: _contentUrls[item]
+      })
+    })
+    arr[idx-1].ContentUrl = url
+    var dataSource = kendo.data.DataSource.create(arr)
+    $("#tabstrip").data("kendoTabStrip").setDataSource(dataSource);
+    $("#tabstrip").data("kendoTabStrip").select(idx-1);
+    // 移除tab
+    var configureCloseTab = function () {
+        var tabsElements = $('#tabstrip li[role="tab"]:gt(0)');
+        tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
+    };
+    configureCloseTab()
+  }
+  
   return {
     jumpRefresh: jumpRefresh, 
     closeCurrentPage: closeCurrentPage,
-    openPage: openPage
+    openPage: openPage,
+    redirectPage: redirectPage
   };
 });
