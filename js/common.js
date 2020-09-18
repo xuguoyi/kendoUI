@@ -15,18 +15,23 @@ define([], function(){
   }
 
   // 新打开页面
-  function openPage(url, text) {
+  function openPage(url, text, index, isReplace) {
     var tabStrip = $('#tabstrip').data('kendoTabStrip');
     if(url && !~$.inArray(url, tabStrip._contentUrls)) {
-      tabStrip.append(
-        [{
+      var $tabs = tabStrip.tabGroup.children();
+      if(index === undefined) {
+        index = $tabs.length;
+      }
+      tabStrip.insertAfter([{
           text: text,
           contentUrl: url
-        }]
-      );
-      var tabsElements = $('#tabstrip li[role="tab"]:last-child');
+      }],$tabs.eq(index - 1));
+      var tabsElements = $('#tabstrip li[role="tab"]').eq(index);
       tabsElements.append('<span data-type="remove" class="k-link"><span class="k-icon k-i-x"></span></span>');
       tabStrip.activateTab(tabsElements)
+      if(isReplace){
+        tabStrip.remove(index-1);
+      }
     }else {
       let n = tabStrip._contentUrls.indexOf(url)
       tabStrip.select(n)

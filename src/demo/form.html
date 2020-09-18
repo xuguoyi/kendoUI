@@ -526,5 +526,10 @@
     $(".fa-bath").click(function () {
       $("#tabstrip").data("kendoTabStrip").reload("li:eq(2)")
     })
+
+    $('.fa-check').click(function() {
+      var idx = $('.k-state-active').attr('aria-controls').split('-')[1]
+      fun.openPage("./plan.html", '沙比页', idx, true);
+    })
   })
 </script>
